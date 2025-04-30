@@ -25,7 +25,7 @@ export default function UCSBOrganizationTable({
   const deleteMutation = useBackendMutation(
     cellToAxiosParamsDelete,
     { onSuccess: onDeleteSuccess },
-    ["/api/ucsborganizations/all"]
+    ["/api/ucsborganizations/all"],
   );
   // Stryker restore all
 
@@ -62,7 +62,7 @@ export default function UCSBOrganizationTable({
   if (hasRole(currentUser, "ROLE_ADMIN")) {
     columns.push(ButtonColumn("Edit", "primary", editCallback, testIdPrefix));
     columns.push(
-      ButtonColumn("Delete", "danger", deleteCallback, testIdPrefix)
+      ButtonColumn("Delete", "danger", deleteCallback, testIdPrefix),
     );
   }
 
