@@ -30,7 +30,7 @@ describe("UCSBOrganizationForm tests", () => {
         <Router>
           <UCSBOrganizationForm />
         </Router>
-      </QueryClientProvider>
+      </QueryClientProvider>,
     );
 
     expect(await screen.findByText(/Create/)).toBeInTheDocument();
@@ -49,7 +49,7 @@ describe("UCSBOrganizationForm tests", () => {
             initialContents={ucsbOrganizationsFixtures.oneUCSBOrganization}
           />
         </Router>
-      </QueryClientProvider>
+      </QueryClientProvider>,
     );
 
     expect(await screen.findByText(/Create/)).toBeInTheDocument();
@@ -71,7 +71,7 @@ describe("UCSBOrganizationForm tests", () => {
         <Router>
           <UCSBOrganizationForm />
         </Router>
-      </QueryClientProvider>
+      </QueryClientProvider>,
     );
     expect(await screen.findByTestId(`${testId}-cancel`)).toBeInTheDocument();
     const cancelButton = screen.getByTestId(`${testId}-cancel`);
@@ -87,7 +87,7 @@ describe("UCSBOrganizationForm tests", () => {
         <Router>
           <UCSBOrganizationForm />
         </Router>
-      </QueryClientProvider>
+      </QueryClientProvider>,
     );
 
     expect(await screen.findByText(/Create/)).toBeInTheDocument();
@@ -100,7 +100,7 @@ describe("UCSBOrganizationForm tests", () => {
 
     await screen.findByText(/OrgCode is required/);
     expect(
-      screen.getByText(/OrgTranslationShort is required/)
+      screen.getByText(/OrgTranslationShort is required/),
     ).toBeInTheDocument();
     expect(screen.getByText(/OrgTranslation is required/)).toBeInTheDocument();
 
@@ -113,7 +113,7 @@ describe("UCSBOrganizationForm tests", () => {
     });
 
     const orgTransShortInput = screen.getByTestId(
-      `${testId}-orgtranslationshort`
+      `${testId}-orgtranslationshort`,
     );
     fireEvent.change(orgTransShortInput, { target: { value: "a".repeat(31) } });
     fireEvent.click(submitButton);
