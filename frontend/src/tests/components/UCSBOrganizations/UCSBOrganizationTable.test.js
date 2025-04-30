@@ -46,7 +46,7 @@ describe("UCSBOrganizationTable tests", () => {
             currentUser={currentUser}
           />
         </MemoryRouter>
-      </QueryClientProvider>
+      </QueryClientProvider>,
     );
 
     // assert
@@ -57,7 +57,7 @@ describe("UCSBOrganizationTable tests", () => {
 
     expectedFields.forEach((field) => {
       const fieldElement = screen.queryByTestId(
-        `${testId}-cell-row-0-col-${field}`
+        `${testId}-cell-row-0-col-${field}`,
       );
       expect(fieldElement).not.toBeInTheDocument();
     });
@@ -76,7 +76,7 @@ describe("UCSBOrganizationTable tests", () => {
             currentUser={currentUser}
           />
         </MemoryRouter>
-      </QueryClientProvider>
+      </QueryClientProvider>,
     );
 
     // assert
@@ -91,33 +91,33 @@ describe("UCSBOrganizationTable tests", () => {
     });
 
     expect(screen.getByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent(
-      "1"
+      "1",
     );
     expect(
-      screen.getByTestId(`${testId}-cell-row-0-col-orgCode`)
+      screen.getByTestId(`${testId}-cell-row-0-col-orgCode`),
     ).toHaveTextContent("SKY");
     expect(
-      screen.getByTestId(`${testId}-cell-row-0-col-inactive`)
+      screen.getByTestId(`${testId}-cell-row-0-col-inactive`),
     ).toHaveTextContent("true");
 
     expect(screen.getByTestId(`${testId}-cell-row-1-col-id`)).toHaveTextContent(
-      "2"
+      "2",
     );
     expect(
-      screen.getByTestId(`${testId}-cell-row-1-col-orgCode`)
+      screen.getByTestId(`${testId}-cell-row-1-col-orgCode`),
     ).toHaveTextContent("OSLI");
     expect(
-      screen.getByTestId(`${testId}-cell-row-1-col-inactive`)
+      screen.getByTestId(`${testId}-cell-row-1-col-inactive`),
     ).toHaveTextContent("false");
 
     const editButton = screen.getByTestId(
-      `${testId}-cell-row-0-col-Edit-button`
+      `${testId}-cell-row-0-col-Edit-button`,
     );
     expect(editButton).toBeInTheDocument();
     expect(editButton).toHaveClass("btn-primary");
 
     const deleteButton = screen.getByTestId(
-      `${testId}-cell-row-0-col-Delete-button`
+      `${testId}-cell-row-0-col-Delete-button`,
     );
     expect(deleteButton).toBeInTheDocument();
     expect(deleteButton).toHaveClass("btn-danger");
@@ -136,7 +136,7 @@ describe("UCSBOrganizationTable tests", () => {
             currentUser={currentUser}
           />
         </MemoryRouter>
-      </QueryClientProvider>
+      </QueryClientProvider>,
     );
 
     // assert
@@ -151,17 +151,17 @@ describe("UCSBOrganizationTable tests", () => {
     });
 
     expect(screen.getByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent(
-      "1"
+      "1",
     );
     expect(
-      screen.getByTestId(`${testId}-cell-row-0-col-orgCode`)
+      screen.getByTestId(`${testId}-cell-row-0-col-orgCode`),
     ).toHaveTextContent("SKY");
 
     expect(screen.getByTestId(`${testId}-cell-row-1-col-id`)).toHaveTextContent(
-      "2"
+      "2",
     );
     expect(
-      screen.getByTestId(`${testId}-cell-row-1-col-orgCode`)
+      screen.getByTestId(`${testId}-cell-row-1-col-orgCode`),
     ).toHaveTextContent("OSLI");
 
     expect(screen.queryByText("Delete")).not.toBeInTheDocument();
@@ -181,19 +181,19 @@ describe("UCSBOrganizationTable tests", () => {
             currentUser={currentUser}
           />
         </MemoryRouter>
-      </QueryClientProvider>
+      </QueryClientProvider>,
     );
 
     // assert - check that the expected content is rendered
     expect(
-      await screen.findByTestId(`${testId}-cell-row-0-col-id`)
+      await screen.findByTestId(`${testId}-cell-row-0-col-id`),
     ).toHaveTextContent("1");
     expect(
-      screen.getByTestId(`${testId}-cell-row-0-col-orgCode`)
+      screen.getByTestId(`${testId}-cell-row-0-col-orgCode`),
     ).toHaveTextContent("SKY");
 
     const editButton = screen.getByTestId(
-      `${testId}-cell-row-0-col-Edit-button`
+      `${testId}-cell-row-0-col-Edit-button`,
     );
     expect(editButton).toBeInTheDocument();
 
@@ -202,7 +202,7 @@ describe("UCSBOrganizationTable tests", () => {
 
     // assert - check that the navigate function was called with the expected path
     await waitFor(() =>
-      expect(mockedNavigate).toHaveBeenCalledWith("/ucsborganizations/edit/1")
+      expect(mockedNavigate).toHaveBeenCalledWith("/ucsborganizations/edit/1"),
     );
   });
 
@@ -224,19 +224,19 @@ describe("UCSBOrganizationTable tests", () => {
             currentUser={currentUser}
           />
         </MemoryRouter>
-      </QueryClientProvider>
+      </QueryClientProvider>,
     );
 
     // assert - check that the expected content is rendered
     expect(
-      await screen.findByTestId(`${testId}-cell-row-0-col-id`)
+      await screen.findByTestId(`${testId}-cell-row-0-col-id`),
     ).toHaveTextContent("1");
     expect(
-      screen.getByTestId(`${testId}-cell-row-0-col-orgCode`)
+      screen.getByTestId(`${testId}-cell-row-0-col-orgCode`),
     ).toHaveTextContent("SKY");
 
     const deleteButton = screen.getByTestId(
-      `${testId}-cell-row-0-col-Delete-button`
+      `${testId}-cell-row-0-col-Delete-button`,
     );
     expect(deleteButton).toBeInTheDocument();
 
