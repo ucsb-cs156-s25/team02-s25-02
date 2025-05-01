@@ -18,7 +18,7 @@ describe("UCSBDiningCommonsMenuItemForm tests", () => {
     render(
       <Router>
         <UCSBDiningCommonsMenuItemForm />
-      </Router>
+      </Router>,
     );
 
     expect(await screen.findByText("Dining Commons Code")).toBeInTheDocument();
@@ -32,7 +32,7 @@ describe("UCSBDiningCommonsMenuItemForm tests", () => {
         <UCSBDiningCommonsMenuItemForm
           initialContents={ucsbDiningCommonsMenuItemFixtures.oneMenuItem[0]}
         />
-      </Router>
+      </Router>,
     );
 
     expect(await screen.findByTestId(`${testIdPrefix}-id`)).toBeInTheDocument();
@@ -45,7 +45,7 @@ describe("UCSBDiningCommonsMenuItemForm tests", () => {
     render(
       <Router>
         <UCSBDiningCommonsMenuItemForm />
-      </Router>
+      </Router>,
     );
 
     const submitButton = screen.getByText("Create");
@@ -62,7 +62,7 @@ describe("UCSBDiningCommonsMenuItemForm tests", () => {
     render(
       <Router>
         <UCSBDiningCommonsMenuItemForm submitAction={mockSubmitAction} />
-      </Router>
+      </Router>,
     );
 
     fireEvent.change(screen.getByTestId(`${testIdPrefix}-diningCommonsCode`), {
@@ -86,7 +86,7 @@ describe("UCSBDiningCommonsMenuItemForm tests", () => {
         name: "Tacos",
         station: "Main Station",
       },
-      expect.anything()
+      expect.anything(),
     );
   });
 
@@ -94,7 +94,7 @@ describe("UCSBDiningCommonsMenuItemForm tests", () => {
     render(
       <Router>
         <UCSBDiningCommonsMenuItemForm />
-      </Router>
+      </Router>,
     );
 
     const cancelButton = screen.getByTestId(`${testIdPrefix}-cancel`);
@@ -107,11 +107,11 @@ describe("UCSBDiningCommonsMenuItemForm tests", () => {
     render(
       <Router>
         <UCSBDiningCommonsMenuItemForm />
-      </Router>
+      </Router>,
     );
 
     expect(
-      screen.getByTestId("UCSBDiningCommonsMenuItemForm-submit")
+      screen.getByTestId("UCSBDiningCommonsMenuItemForm-submit"),
     ).toBeInTheDocument();
   });
 });
