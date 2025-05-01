@@ -61,8 +61,8 @@ describe("UCSBOrganizationForm tests", () => {
 
     expect(await screen.findByTestId(`${testId}-inactive`)).toBeInTheDocument();
 
-    expect(await screen.findByTestId(`${testId}-id`)).toBeInTheDocument();
-    expect(screen.getByText(`Id`)).toBeInTheDocument();
+    expect(await screen.findByTestId(`${testId}-orgcode`)).toBeInTheDocument();
+    expect(screen.getByText(`OrgCode`)).toBeInTheDocument();
   });
 
   test("that navigate(-1) is called when Cancel is clicked", async () => {
