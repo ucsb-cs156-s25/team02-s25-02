@@ -87,6 +87,7 @@ describe("UCSBOrganizationCreatePage tests", () => {
 
     const orgCodeInput = screen.getByLabelText("OrgCode");
     expect(orgCodeInput).toBeInTheDocument();
+    expect(orgCodeInput).not.toBeDisabled();
 
     const orgTransShortInput = screen.getByLabelText("OrgTranslationShort");
     expect(orgTransShortInput).toBeInTheDocument();
