@@ -11,6 +11,10 @@ import RestaurantIndexPage from "main/pages/Restaurants/RestaurantIndexPage";
 import RestaurantCreatePage from "main/pages/Restaurants/RestaurantCreatePage";
 import RestaurantEditPage from "main/pages/Restaurants/RestaurantEditPage";
 
+import UCSBDiningCommonsMenuItemIndexPage from "main/pages/UCSBDiningCommonsMenuItem/UCSBDiningCommonsMenuItemIndexPage";
+import UCSBDiningCommonsMenuItemCreatePage from "main/pages/UCSBDiningCommonsMenuItem/UCSBDiningCommonsMenuItemCreatePage";
+import UCSBDiningCommonsMenuItemEditPage from "main/pages/UCSBDiningCommonsMenuItem/UCSBDiningCommonsMenuItemEditPage";
+
 import PlaceholderIndexPage from "main/pages/Placeholder/PlaceholderIndexPage";
 import PlaceholderCreatePage from "main/pages/Placeholder/PlaceholderCreatePage";
 import PlaceholderEditPage from "main/pages/Placeholder/PlaceholderEditPage";
@@ -31,6 +35,8 @@ function App() {
         {hasRole(currentUser, "ROLE_ADMIN") && (
           <Route exact path="/admin/users" element={<AdminUsersPage />} />
         )}
+
+        {/* UCSB Dates */}
         {hasRole(currentUser, "ROLE_USER") && (
           <>
             <Route exact path="/ucsbdates" element={<UCSBDatesIndexPage />} />
@@ -38,24 +44,31 @@ function App() {
         )}
         {hasRole(currentUser, "ROLE_ADMIN") && (
           <>
-            <Route
-              exact
-              path="/ucsbdates/edit/:id"
-              element={<UCSBDatesEditPage />}
-            />
-            <Route
-              exact
-              path="/ucsbdates/create"
-              element={<UCSBDatesCreatePage />}
-            />
+            <Route exact path="/ucsbdates/edit/:id" element={<UCSBDatesEditPage />} />
+            <Route exact path="/ucsbdates/create" element={<UCSBDatesCreatePage />} />
           </>
         )}
+
+        {/* Restaurants */}
+        {hasRole(currentUser, "ROLE_USER") && (
+          <>
+            <Route exact path="/restaurants" element={<RestaurantIndexPage />} />
+          </>
+        )}
+        {hasRole(currentUser, "ROLE_ADMIN") && (
+          <>
+            <Route exact path="/restaurants/edit/:id" element={<RestaurantEditPage />} />
+            <Route exact path="/restaurants/create" element={<RestaurantCreatePage />} />
+          </>
+        )}
+
+        {/* UCSB Dining Commons Menu Items */}
         {hasRole(currentUser, "ROLE_USER") && (
           <>
             <Route
               exact
-              path="/restaurants"
-              element={<RestaurantIndexPage />}
+              path="/diningcommonsmenuitem"
+              element={<UCSBDiningCommonsMenuItemIndexPage />}
             />
           </>
         )}
@@ -63,37 +76,27 @@ function App() {
           <>
             <Route
               exact
-              path="/restaurants/edit/:id"
-              element={<RestaurantEditPage />}
+              path="/diningcommonsmenuitem/create"
+              element={<UCSBDiningCommonsMenuItemCreatePage />}
             />
             <Route
               exact
-              path="/restaurants/create"
-              element={<RestaurantCreatePage />}
+              path="/diningcommonsmenuitem/edit/:id"
+              element={<UCSBDiningCommonsMenuItemEditPage />}
             />
           </>
         )}
+
+        {/* Placeholder */}
         {hasRole(currentUser, "ROLE_USER") && (
           <>
-            <Route
-              exact
-              path="/placeholder"
-              element={<PlaceholderIndexPage />}
-            />
+            <Route exact path="/placeholder" element={<PlaceholderIndexPage />} />
           </>
         )}
         {hasRole(currentUser, "ROLE_ADMIN") && (
           <>
-            <Route
-              exact
-              path="/placeholder/edit/:id"
-              element={<PlaceholderEditPage />}
-            />
-            <Route
-              exact
-              path="/placeholder/create"
-              element={<PlaceholderCreatePage />}
-            />
+            <Route exact path="/placeholder/edit/:id" element={<PlaceholderEditPage />} />
+            <Route exact path="/placeholder/create" element={<PlaceholderCreatePage />} />
           </>
         )}
       </Routes>
