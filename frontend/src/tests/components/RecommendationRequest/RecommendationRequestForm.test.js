@@ -24,7 +24,9 @@ describe("RecommendationRequestForm tests", () => {
   test("renders correctly when passing in a RecommendationRequest", async () => {
     render(
       <Router>
-        <RecommendationRequestForm initialContents={recommendationRequestFixtures.oneRequest} />
+        <RecommendationRequestForm
+          initialContents={recommendationRequestFixtures.oneRequest}
+        />
       </Router>,
     );
     await screen.findByTestId(/RecommendationRequestForm-id/);
@@ -39,11 +41,21 @@ describe("RecommendationRequestForm tests", () => {
       </Router>,
     );
     await screen.findByTestId("RecommendationRequestForm-requesterEmail");
-    const requesterEmailField = screen.getByTestId("RecommendationRequestForm-requesterEmail");
-    const professorEmailField = screen.getByTestId("RecommendationRequestForm-professorEmail");
-    const explanationField = screen.getByTestId("RecommendationRequestForm-explanation");
-    const dateRequestedField = screen.getByTestId("RecommendationRequestForm-dateRequested");
-    const dateNeededField = screen.getByTestId("RecommendationRequestForm-dateNeeded");
+    const requesterEmailField = screen.getByTestId(
+      "RecommendationRequestForm-requesterEmail",
+    );
+    const professorEmailField = screen.getByTestId(
+      "RecommendationRequestForm-professorEmail",
+    );
+    const explanationField = screen.getByTestId(
+      "RecommendationRequestForm-explanation",
+    );
+    const dateRequestedField = screen.getByTestId(
+      "RecommendationRequestForm-dateRequested",
+    );
+    const dateNeededField = screen.getByTestId(
+      "RecommendationRequestForm-dateNeeded",
+    );
     const doneField = screen.getByTestId("RecommendationRequestForm-done");
     const submitButton = screen.getByTestId("RecommendationRequestForm-cancel");
 
@@ -77,37 +89,51 @@ describe("RecommendationRequestForm tests", () => {
 
   test("No error messages on good input", async () => {
     const mockSubmitAction = jest.fn();
-  
+
     render(
       <Router>
         <RecommendationRequestForm submitAction={mockSubmitAction} />
-      </Router>
+      </Router>,
     );
-  
-    fireEvent.change(screen.getByTestId("RecommendationRequestForm-requesterEmail"), {
-      target: { value: "student@ucsb.edu" },
-    });
-    fireEvent.change(screen.getByTestId("RecommendationRequestForm-professorEmail"), {
-      target: { value: "professor@ucsb.edu" },
-    });
-    fireEvent.change(screen.getByTestId("RecommendationRequestForm-explanation"), {
-      target: { value: "Grad school recommendation" },
-    });
-    fireEvent.change(screen.getByTestId("RecommendationRequestForm-dateRequested"), {
-      target: { value: "2024-05-01T10:00" },
-    });
-    fireEvent.change(screen.getByTestId("RecommendationRequestForm-dateNeeded"), {
-      target: { value: "2024-05-10T12:00" },
-    });
+
+    fireEvent.change(
+      screen.getByTestId("RecommendationRequestForm-requesterEmail"),
+      {
+        target: { value: "student@ucsb.edu" },
+      },
+    );
+    fireEvent.change(
+      screen.getByTestId("RecommendationRequestForm-professorEmail"),
+      {
+        target: { value: "professor@ucsb.edu" },
+      },
+    );
+    fireEvent.change(
+      screen.getByTestId("RecommendationRequestForm-explanation"),
+      {
+        target: { value: "Grad school recommendation" },
+      },
+    );
+    fireEvent.change(
+      screen.getByTestId("RecommendationRequestForm-dateRequested"),
+      {
+        target: { value: "2024-05-01T10:00" },
+      },
+    );
+    fireEvent.change(
+      screen.getByTestId("RecommendationRequestForm-dateNeeded"),
+      {
+        target: { value: "2024-05-10T12:00" },
+      },
+    );
     fireEvent.change(screen.getByTestId("RecommendationRequestForm-done"), {
       target: { value: "false" },
     });
-  
+
     fireEvent.click(screen.getByTestId("RecommendationRequestForm-submit"));
-  
+
     await waitFor(() => expect(mockSubmitAction).toHaveBeenCalled());
   });
-  
 
   test("that navigate(-1) is called when Cancel is clicked", async () => {
     render(
