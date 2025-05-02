@@ -17,7 +17,7 @@ export default function UCSBDiningCommonsMenuItemTable({
   const navigate = useNavigate();
 
   const editCallback = (cell) => {
-    navigate(`/ucsbdiningcommonsmenuitems/edit/${cell.row.values.id}`);
+    navigate(`/diningcommonsmenuitem/edit/${cell.row.values.id}`);
   };
 
   const deleteMutation = useBackendMutation(
