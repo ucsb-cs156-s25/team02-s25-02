@@ -38,7 +38,7 @@ describe("UCSBDiningCommonsMenuItemTable tests", () => {
             currentUser={currentUserFixtures.userOnly}
           />
         </MemoryRouter>
-      </QueryClientProvider>
+      </QueryClientProvider>,
     );
 
     expect(screen.getByText("Dining Commons Code")).toBeInTheDocument();
@@ -59,7 +59,7 @@ describe("UCSBDiningCommonsMenuItemTable tests", () => {
             currentUser={currentUserFixtures.adminUser}
           />
         </MemoryRouter>
-      </QueryClientProvider>
+      </QueryClientProvider>,
     );
 
     expect(screen.getByText("id")).toBeInTheDocument();
@@ -67,16 +67,28 @@ describe("UCSBDiningCommonsMenuItemTable tests", () => {
     expect(screen.getByText("Name")).toBeInTheDocument();
     expect(screen.getByText("Station")).toBeInTheDocument();
 
-    expect(screen.getByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent("2");
-    expect(screen.getByTestId(`${testId}-cell-row-0-col-diningCommonsCode`)).toHaveTextContent("ortega");
-    expect(screen.getByTestId(`${testId}-cell-row-0-col-name`)).toHaveTextContent("Tacos");
-    expect(screen.getByTestId(`${testId}-cell-row-0-col-station`)).toHaveTextContent("Main Station");
+    expect(screen.getByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent(
+      "2",
+    );
+    expect(
+      screen.getByTestId(`${testId}-cell-row-0-col-diningCommonsCode`),
+    ).toHaveTextContent("ortega");
+    expect(
+      screen.getByTestId(`${testId}-cell-row-0-col-name`),
+    ).toHaveTextContent("Tacos");
+    expect(
+      screen.getByTestId(`${testId}-cell-row-0-col-station`),
+    ).toHaveTextContent("Main Station");
 
-    const editButton = screen.getByTestId(`${testId}-cell-row-0-col-Edit-button`);
+    const editButton = screen.getByTestId(
+      `${testId}-cell-row-0-col-Edit-button`,
+    );
     expect(editButton).toBeInTheDocument();
     expect(editButton).toHaveClass("btn-primary");
 
-    const deleteButton = screen.getByTestId(`${testId}-cell-row-0-col-Delete-button`);
+    const deleteButton = screen.getByTestId(
+      `${testId}-cell-row-0-col-Delete-button`,
+    );
     expect(deleteButton).toBeInTheDocument();
     expect(deleteButton).toHaveClass("btn-danger");
   });
@@ -90,14 +102,18 @@ describe("UCSBDiningCommonsMenuItemTable tests", () => {
             currentUser={currentUserFixtures.adminUser}
           />
         </MemoryRouter>
-      </QueryClientProvider>
+      </QueryClientProvider>,
     );
 
-    const editButton = screen.getByTestId(`${testId}-cell-row-0-col-Edit-button`);
+    const editButton = screen.getByTestId(
+      `${testId}-cell-row-0-col-Edit-button`,
+    );
     fireEvent.click(editButton);
 
     await waitFor(() =>
-      expect(mockedNavigate).toHaveBeenCalledWith("/ucsbdiningcommonsmenuitems/edit/2")
+      expect(mockedNavigate).toHaveBeenCalledWith(
+        "/ucsbdiningcommonsmenuitems/edit/2",
+      ),
     );
   });
 
@@ -118,17 +134,21 @@ describe("UCSBDiningCommonsMenuItemTable tests", () => {
             currentUser={currentUserFixtures.adminUser}
           />
         </MemoryRouter>
-      </QueryClientProvider>
+      </QueryClientProvider>,
     );
 
-    const deleteButton = screen.getByTestId(`${testId}-cell-row-0-col-Delete-button`);
+    const deleteButton = screen.getByTestId(
+      `${testId}-cell-row-0-col-Delete-button`,
+    );
     fireEvent.click(deleteButton);
 
     await waitFor(() => expect(axiosMock.history.delete.length).toBe(1));
     expect(axiosMock.history.delete[0].params).toEqual({ id: 2 });
 
     // ✅ kills the invalidation array mutant and string literal mutant
-    expect(invalidateSpy).toHaveBeenCalledWith(["/api/ucsbdiningcommonsmenuitem/all"]);
+    expect(invalidateSpy).toHaveBeenCalledWith([
+      "/api/ucsbdiningcommonsmenuitem/all",
+    ]);
 
     // ✅ kills the onSuccess object mutant
     expect(mockToast).toHaveBeenCalledWith("deleted");
