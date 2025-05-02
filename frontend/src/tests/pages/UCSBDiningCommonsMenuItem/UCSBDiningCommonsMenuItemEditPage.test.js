@@ -140,9 +140,7 @@ describe("UCSBDiningCommonsMenuItemEditPage tests", () => {
       // verify PUT request carried correct params & data
       await waitFor(() => {
         expect(axiosMock.history.put.length).toBe(1);
-        // params: { id: data.id }
         expect(axiosMock.history.put[0].params).toEqual({ id: 42 });
-        // data payload
         expect(JSON.parse(axiosMock.history.put[0].data)).toEqual({
           diningCommonsCode: "de-la-guerra",
           name: "Burritos",
@@ -150,15 +148,19 @@ describe("UCSBDiningCommonsMenuItemEditPage tests", () => {
         });
       });
 
-      // toast and navigate expectations
-      await waitFor(() =>
+      // toast expectations
+      await waitFor(() => {
         expect(mockToast).toHaveBeenCalledWith(
           "UCSBDiningCommonsMenuItem Updated - id: 42 name: Burritos",
-        ),
-      );
-      expect(mockNavigate).toHaveBeenCalledWith({
-        to: "/diningcommonsmenuitem",
-        replace: true,
+        );
+      });
+
+      // navigate expectations
+      await waitFor(() => {
+        expect(mockNavigate).toHaveBeenCalledWith({
+          to: "/diningcommonsmenuitem",
+          replace: true,
+        });
       });
     });
 
