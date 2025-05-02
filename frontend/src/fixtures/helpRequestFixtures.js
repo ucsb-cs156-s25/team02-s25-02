@@ -7,7 +7,7 @@ const helpRequestFixtures = {
       tableOrBreakoutRoom: "room1",
       requestTime: "2022-01-03T00:00:00",
       explanation: "need help on branching",
-      solved: "true",
+      solved: true,
     },
   ],
   threehelpRequests: [
@@ -18,7 +18,7 @@ const helpRequestFixtures = {
       tableOrBreakoutRoom: "room1",
       requestTime: "2022-01-03T00:00:00",
       explanation: "need help on branching",
-      solved: "true",
+      solved: true,
     },
     {
       id: 2,
