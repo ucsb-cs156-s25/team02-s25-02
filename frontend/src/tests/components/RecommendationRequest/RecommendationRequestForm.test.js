@@ -75,6 +75,40 @@ describe("RecommendationRequestForm tests", () => {
     expect(screen.getByText(/Done is required./)).toBeInTheDocument();
   });
 
+  test("No error messages on good input", async () => {
+    const mockSubmitAction = jest.fn();
+  
+    render(
+      <Router>
+        <RecommendationRequestForm submitAction={mockSubmitAction} />
+      </Router>
+    );
+  
+    fireEvent.change(screen.getByTestId("RecommendationRequestForm-requesterEmail"), {
+      target: { value: "student@ucsb.edu" },
+    });
+    fireEvent.change(screen.getByTestId("RecommendationRequestForm-professorEmail"), {
+      target: { value: "professor@ucsb.edu" },
+    });
+    fireEvent.change(screen.getByTestId("RecommendationRequestForm-explanation"), {
+      target: { value: "Grad school recommendation" },
+    });
+    fireEvent.change(screen.getByTestId("RecommendationRequestForm-dateRequested"), {
+      target: { value: "2024-05-01T10:00" },
+    });
+    fireEvent.change(screen.getByTestId("RecommendationRequestForm-dateNeeded"), {
+      target: { value: "2024-05-10T12:00" },
+    });
+    fireEvent.change(screen.getByTestId("RecommendationRequestForm-done"), {
+      target: { value: "false" },
+    });
+  
+    fireEvent.click(screen.getByTestId("RecommendationRequestForm-submit"));
+  
+    await waitFor(() => expect(mockSubmitAction).toHaveBeenCalled());
+  });
+  
+
   test("that navigate(-1) is called when Cancel is clicked", async () => {
     render(
       <Router>

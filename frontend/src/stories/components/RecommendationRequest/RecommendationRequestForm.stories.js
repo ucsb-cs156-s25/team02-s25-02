@@ -14,6 +14,7 @@ const Template = (args) => {
 export const Create = Template.bind({});
 
 Create.args = {
+  initialContents: {},
   buttonLabel: "Create",
   submitAction: (data) => {
     console.log("Submit was clicked with data: ", data);
