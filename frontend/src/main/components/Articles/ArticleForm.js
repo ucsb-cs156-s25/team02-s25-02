@@ -108,7 +108,7 @@ function ArticleForm({
       </Form.Group>
 
       <Form.Group className="mb-3">
-        <Form.Label htmlFor="dateAdded">Date (iso format)</Form.Label>
+        <Form.Label htmlFor="dateAdded">Date Added</Form.Label>
         <Form.Control
           data-testid="ArticleForm-dateAdded"
           id="dateAdded"
