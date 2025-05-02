@@ -39,8 +39,12 @@ describe("UCSBDiningCommonsMenuItemEditPage tests", () => {
     beforeEach(() => {
       axiosMock.reset();
       axiosMock.resetHistory();
-      axiosMock.onGet("/api/currentUser").reply(200, apiCurrentUserFixtures.userOnly);
-      axiosMock.onGet("/api/systemInfo").reply(200, systemInfoFixtures.showingNeither);
+      axiosMock
+        .onGet("/api/currentUser")
+        .reply(200, apiCurrentUserFixtures.userOnly);
+      axiosMock
+        .onGet("/api/systemInfo")
+        .reply(200, systemInfoFixtures.showingNeither);
       axiosMock
         .onGet("/api/ucsbdiningcommonsmenuitem", { params: { id: 42 } })
         .timeout();
@@ -73,8 +77,12 @@ describe("UCSBDiningCommonsMenuItemEditPage tests", () => {
     beforeEach(() => {
       axiosMock.reset();
       axiosMock.resetHistory();
-      axiosMock.onGet("/api/currentUser").reply(200, apiCurrentUserFixtures.adminUser);
-      axiosMock.onGet("/api/systemInfo").reply(200, systemInfoFixtures.showingNeither);
+      axiosMock
+        .onGet("/api/currentUser")
+        .reply(200, apiCurrentUserFixtures.adminUser);
+      axiosMock
+        .onGet("/api/systemInfo")
+        .reply(200, systemInfoFixtures.showingNeither);
       axiosMock
         .onGet("/api/ucsbdiningcommonsmenuitem", { params: { id: 42 } })
         .reply(200, {
@@ -108,8 +116,12 @@ describe("UCSBDiningCommonsMenuItemEditPage tests", () => {
       const codeField = screen.getByTestId(
         "UCSBDiningCommonsMenuItemForm-diningCommonsCode",
       );
-      const nameField = screen.getByTestId("UCSBDiningCommonsMenuItemForm-name");
-      const stationField = screen.getByTestId("UCSBDiningCommonsMenuItemForm-station");
+      const nameField = screen.getByTestId(
+        "UCSBDiningCommonsMenuItemForm-name",
+      );
+      const stationField = screen.getByTestId(
+        "UCSBDiningCommonsMenuItemForm-station",
+      );
       const submit = screen.getByTestId("UCSBDiningCommonsMenuItemForm-submit");
 
       expect(idField).toHaveValue("42");
