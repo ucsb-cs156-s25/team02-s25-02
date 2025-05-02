@@ -2,7 +2,7 @@ import React from "react";
 import UCSBDiningCommonsMenuItemForm from "main/components/UCSBDiningCommonsMenuItem/UCSBDiningCommonsMenuItemForm";
 
 export default {
-  title: "Forms/UCSBDiningCommonsMenuItemForm",
+  title: "components/UCSBDiningCommonsMenuItem/UCSBDiningCommonsMenuItemForm",
   component: UCSBDiningCommonsMenuItemForm,
 };
 
