@@ -101,9 +101,7 @@ describe("ArticlesIndexPage tests", () => {
     const title = screen.getByText("sample 1");
     expect(title).toBeInTheDocument();
 
-    const url = screen.getByText(
-      "https://www.example.com/sample1",
-    );
+    const url = screen.getByText("https://www.example.com/sample1");
     expect(url).toBeInTheDocument();
 
     const explanation = screen.getByText("sample 1 description");
