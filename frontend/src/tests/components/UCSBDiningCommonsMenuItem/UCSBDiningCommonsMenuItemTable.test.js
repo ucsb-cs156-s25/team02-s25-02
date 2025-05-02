@@ -146,9 +146,13 @@ describe("UCSBDiningCommonsMenuItemTable tests", () => {
     expect(axiosMock.history.delete[0].params).toEqual({ id: 2 });
 
     // ✅ kills the invalidation array mutant and string literal mutant
+<<<<<<< HEAD
     expect(invalidateSpy).toHaveBeenCalledWith([
       "/api/ucsbdiningcommonsmenuitem/all",
     ]);
+=======
+    expect(invalidateSpy).toHaveBeenCalledWith(["/api/ucsbdiningcommonsmenuitem/all"]);
+>>>>>>> fcd30603 (xz - create tablecomponent)
 
     // ✅ kills the onSuccess object mutant
     expect(mockToast).toHaveBeenCalledWith("deleted");

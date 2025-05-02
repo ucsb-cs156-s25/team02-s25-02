@@ -51,9 +51,13 @@ export default function UCSBDiningCommonsMenuItemTable({
 
   if (hasRole(currentUser, "ROLE_ADMIN")) {
     columns.push(ButtonColumn("Edit", "primary", editCallback, testIdPrefix));
+<<<<<<< HEAD
     columns.push(
       ButtonColumn("Delete", "danger", deleteCallback, testIdPrefix),
     );
+=======
+    columns.push(ButtonColumn("Delete", "danger", deleteCallback, testIdPrefix));
+>>>>>>> fcd30603 (xz - create tablecomponent)
   }
 
   return <OurTable data={menuItems} columns={columns} testid={testIdPrefix} />;
