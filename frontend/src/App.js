@@ -23,10 +23,6 @@ import UCSBOrganizationIndexPage from "main/pages/UCSBOrganizations/UCSBOrganiza
 import UCSBOrganizationCreatePage from "main/pages/UCSBOrganizations/UCSBOrganizationCreatePage";
 import UCSBOrganizationEditPage from "main/pages/UCSBOrganizations/UCSBOrganizationEditPage";
 
-import RecommendationRequestIndexPage from "main/pages/RecommendationRequest/RecommendationRequestIndexPage";
-import RecommendationRequestCreatePage from "main/pages/RecommendationRequest/RecommendationRequestCreatePage";
-import RecommendationRequestEditPage from "main/pages/RecommendationRequest/RecommendationRequestEditPage";
-
 import PlaceholderIndexPage from "main/pages/Placeholder/PlaceholderIndexPage";
 import PlaceholderCreatePage from "main/pages/Placeholder/PlaceholderCreatePage";
 import PlaceholderEditPage from "main/pages/Placeholder/PlaceholderEditPage";
