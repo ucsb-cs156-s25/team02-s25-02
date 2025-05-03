@@ -15,7 +15,7 @@ describe("MenuItemReviewForm tests", () => {
     render(
       <Router>
         <MenuItemReviewForm />
-      </Router>
+      </Router>,
     );
     expect(await screen.findByText(/Item ID/)).toBeInTheDocument();
     expect(screen.getByText(/Reviewer Email/)).toBeInTheDocument();
@@ -28,7 +28,7 @@ describe("MenuItemReviewForm tests", () => {
     render(
       <Router>
         <MenuItemReviewForm />
-      </Router>
+      </Router>,
     );
     const cancelButton = screen.getByText(/Cancel/);
     fireEvent.click(cancelButton);
@@ -39,7 +39,7 @@ describe("MenuItemReviewForm tests", () => {
     render(
       <Router>
         <MenuItemReviewForm />
-      </Router>
+      </Router>,
     );
 
     const submitButton = screen.getByText(/Create/);
@@ -64,7 +64,7 @@ describe("MenuItemReviewForm tests", () => {
 
     await screen.findByText(/Item ID must be at least 1./);
     expect(
-      screen.getByText(/Invalid email address format./)
+      screen.getByText(/Invalid email address format./),
     ).toBeInTheDocument();
     expect(screen.getByText(/Stars must be at most 5./)).toBeInTheDocument();
   });
@@ -74,12 +74,12 @@ describe("MenuItemReviewForm tests", () => {
     render(
       <Router>
         <MenuItemReviewForm initialContents={initialContents} />
-      </Router>
+      </Router>,
     );
 
     expect(screen.getByTestId("MenuItemReviewForm-id")).toBeInTheDocument();
     expect(screen.getByTestId("MenuItemReviewForm-id")).toHaveValue(
-      initialContents.id.toString()
+      initialContents.id.toString(),
     );
     expect(screen.getByTestId("MenuItemReviewForm-id")).toBeDisabled();
   });

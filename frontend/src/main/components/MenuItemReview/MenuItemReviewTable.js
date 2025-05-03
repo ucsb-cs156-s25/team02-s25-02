@@ -23,7 +23,7 @@ export default function MenuItemReviewTable({
   const deleteMutation = useBackendMutation(
     cellToAxiosParamsDelete,
     { onSuccess: onDeleteSuccess },
-    ["/api/menuitemreview/all"]
+    ["/api/menuitemreview/all"],
   );
   // Stryker restore all
 
@@ -62,7 +62,7 @@ export default function MenuItemReviewTable({
   if (hasRole(currentUser, "ROLE_ADMIN")) {
     columns.push(ButtonColumn("Edit", "primary", editCallback, testIdPrefix));
     columns.push(
-      ButtonColumn("Delete", "danger", deleteCallback, testIdPrefix)
+      ButtonColumn("Delete", "danger", deleteCallback, testIdPrefix),
     );
   }
 
