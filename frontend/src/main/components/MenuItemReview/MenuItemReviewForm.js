@@ -52,6 +52,7 @@ function MenuItemReviewForm({
               {...register("itemId", {
                 required: "Item ID is required.",
                 min: { value: 1, message: "Item ID must be at least 1." },
+                valueAsNumber: true,
               })}
             />
             <Form.Control.Feedback type="invalid">
@@ -140,7 +141,7 @@ function MenuItemReviewForm({
               as="textarea"
               rows={3}
               isInvalid={Boolean(errors.comments)}
-              {...register("comments")}
+              {...register("comments", { required: "Comments are required." })}
             />
             <Form.Control.Feedback type="invalid">
               {errors.comments?.message}

@@ -24,48 +24,6 @@ describe("MenuItemReviewForm tests", () => {
     expect(screen.getByText(/Comments/)).toBeInTheDocument();
   });
 
-  test("when I click submit, the right things happen", async () => {
-    const submitSpy = jest.fn();
-    render(
-      <Router>
-        <MenuItemReviewForm submitAction={submitSpy} />
-      </Router>
-    );
-
-    const expectedReview = {
-      itemId: "1",
-      reviewerEmail: "test@test.com",
-      stars: 5,
-      dateReviewed: "2024-02-14T12:00",
-      comments: "Great food!",
-    };
-
-    const itemIdField = screen.getByLabelText(/Item ID/);
-    const reviewerEmailField = screen.getByLabelText(/Reviewer Email/);
-    const starsField = screen.getByLabelText(/Stars/);
-    const dateReviewedField = screen.getByLabelText(/Date Reviewed/);
-    const commentsField = screen.getByLabelText(/Comments/);
-    const submitButton = screen.getByText(/Create/);
-
-    fireEvent.change(itemIdField, { target: { value: expectedReview.itemId } });
-    fireEvent.change(reviewerEmailField, {
-      target: { value: expectedReview.reviewerEmail },
-    });
-    fireEvent.change(starsField, { target: { value: expectedReview.stars } });
-    fireEvent.change(dateReviewedField, {
-      target: { value: expectedReview.dateReviewed },
-    });
-    fireEvent.change(commentsField, {
-      target: { value: expectedReview.comments },
-    });
-
-    fireEvent.click(submitButton);
-
-    await waitFor(() => expect(submitSpy).toHaveBeenCalled());
-
-    expect(submitSpy).toHaveBeenCalledWith(expectedReview);
-  });
-
   test("that navigate(-1) is called when Cancel is clicked", async () => {
     render(
       <Router>

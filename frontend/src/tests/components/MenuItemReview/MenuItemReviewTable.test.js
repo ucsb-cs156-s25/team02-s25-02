@@ -74,19 +74,29 @@ describe("MenuItemReviewTable tests", () => {
       "Delete",
     ];
     expectedHeaders.forEach((headerText) => {
-      expect(
-        screen.getByTestId(`MenuItemReviewTable-header-${headerText}`)
-      ).toBeInTheDocument();
+      const header = screen.getByRole("columnheader", { name: headerText });
+      expect(header).toBeInTheDocument();
     });
 
-    // Check first review data
-    expect(screen.getByText("1")).toBeInTheDocument();
-    expect(screen.getByText("shiyuanwang@ucsb.edu")).toBeInTheDocument();
-    expect(screen.getByText("5")).toBeInTheDocument();
-    expect(screen.getByText("2024-02-14T12:00:00")).toBeInTheDocument();
+    // Check first review data using specific test IDs for cells
     expect(
-      screen.getByText("Excellent item! Very tasty and well-prepared.")
-    ).toBeInTheDocument();
+      screen.getByTestId("MenuItemReviewTable-cell-row-0-col-id")
+    ).toHaveTextContent("1");
+    expect(
+      screen.getByTestId("MenuItemReviewTable-cell-row-0-col-itemId")
+    ).toHaveTextContent("1"); // Check itemId specifically
+    expect(
+      screen.getByTestId("MenuItemReviewTable-cell-row-0-col-reviewerEmail")
+    ).toHaveTextContent("shiyuanwang@ucsb.edu");
+    expect(
+      screen.getByTestId("MenuItemReviewTable-cell-row-0-col-stars")
+    ).toHaveTextContent("5");
+    expect(
+      screen.getByTestId("MenuItemReviewTable-cell-row-0-col-dateReviewed")
+    ).toHaveTextContent("2024-02-14T12:00:00");
+    expect(
+      screen.getByTestId("MenuItemReviewTable-cell-row-0-col-comments")
+    ).toHaveTextContent("Excellent item! Very tasty and well-prepared.");
   });
 
   test("Edit button navigates to the edit page for admin user", async () => {
