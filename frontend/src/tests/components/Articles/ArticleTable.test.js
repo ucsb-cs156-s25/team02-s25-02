@@ -1,6 +1,6 @@
 import { fireEvent, render, waitFor, screen } from "@testing-library/react";
-import { ucsbOrganizationsFixtures } from "fixtures/ucsbOrganizationsFixtures";
-import UCSBOrganizationTable from "main/components/UCSBOrganization/UCSBOrganizationTable";
+import { articlesFixtures } from "fixtures/articlesFixtures";
+import ArticleTable from "main/components/Articles/ArticleTable";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { MemoryRouter } from "react-router-dom";
 import { currentUserFixtures } from "fixtures/currentUserFixtures";
@@ -14,22 +14,26 @@ jest.mock("react-router-dom", () => ({
   useNavigate: () => mockedNavigate,
 }));
 
-describe("UCSBOrganizationTable tests", () => {
+describe("ArticleTable tests", () => {
   const queryClient = new QueryClient();
 
   const expectedHeaders = [
-    "OrgCode",
-    "OrgTranslationShort",
-    "OrgTranslation",
-    "Inactive",
+    "id",
+    "Title",
+    "Url",
+    "Explanation",
+    "Email",
+    "Date (iso format)",
   ];
   const expectedFields = [
-    "orgCode",
-    "orgTranslationShort",
-    "orgTranslation",
-    "inactive",
+    "id",
+    "title",
+    "url",
+    "explanation",
+    "email",
+    "dateAdded",
   ];
-  const testId = "UCSBOrganizationTable";
+  const testId = "ArticleTable";
 
   test("renders empty table correctly", () => {
     // arrange
@@ -39,10 +43,7 @@ describe("UCSBOrganizationTable tests", () => {
     render(
       <QueryClientProvider client={queryClient}>
         <MemoryRouter>
-          <UCSBOrganizationTable
-            ucsborganizations={[]}
-            currentUser={currentUser}
-          />
+          <ArticleTable articles={[]} currentUser={currentUser} />
         </MemoryRouter>
       </QueryClientProvider>,
     );
@@ -69,8 +70,8 @@ describe("UCSBOrganizationTable tests", () => {
     render(
       <QueryClientProvider client={queryClient}>
         <MemoryRouter>
-          <UCSBOrganizationTable
-            ucsborganizations={ucsbOrganizationsFixtures.threeUCSBOrganization}
+          <ArticleTable
+            articles={articlesFixtures.threeArticles}
             currentUser={currentUser}
           />
         </MemoryRouter>
@@ -88,18 +89,19 @@ describe("UCSBOrganizationTable tests", () => {
       expect(header).toBeInTheDocument();
     });
 
+    expect(screen.getByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent(
+      "1",
+    );
     expect(
-      screen.getByTestId(`${testId}-cell-row-0-col-orgCode`),
-    ).toHaveTextContent("SKY");
+      screen.getByTestId(`${testId}-cell-row-0-col-title`),
+    ).toHaveTextContent("sample 1");
+
+    expect(screen.getByTestId(`${testId}-cell-row-1-col-id`)).toHaveTextContent(
+      "2",
+    );
     expect(
-      screen.getByTestId(`${testId}-cell-row-0-col-inactive`),
-    ).toHaveTextContent("true");
-    expect(
-      screen.getByTestId(`${testId}-cell-row-1-col-orgCode`),
-    ).toHaveTextContent("OSLI");
-    expect(
-      screen.getByTestId(`${testId}-cell-row-1-col-inactive`),
-    ).toHaveTextContent("false");
+      screen.getByTestId(`${testId}-cell-row-1-col-url`),
+    ).toHaveTextContent("https://www.example.com/sample2");
 
     const editButton = screen.getByTestId(
       `${testId}-cell-row-0-col-Edit-button`,
@@ -122,8 +124,8 @@ describe("UCSBOrganizationTable tests", () => {
     render(
       <QueryClientProvider client={queryClient}>
         <MemoryRouter>
-          <UCSBOrganizationTable
-            ucsborganizations={ucsbOrganizationsFixtures.threeUCSBOrganization}
+          <ArticleTable
+            articles={articlesFixtures.threeArticles}
             currentUser={currentUser}
           />
         </MemoryRouter>
@@ -141,13 +143,19 @@ describe("UCSBOrganizationTable tests", () => {
       expect(header).toBeInTheDocument();
     });
 
+    expect(screen.getByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent(
+      "1",
+    );
     expect(
-      screen.getByTestId(`${testId}-cell-row-0-col-orgCode`),
-    ).toHaveTextContent("SKY");
+      screen.getByTestId(`${testId}-cell-row-0-col-explanation`),
+    ).toHaveTextContent("ample 1 description");
 
+    expect(screen.getByTestId(`${testId}-cell-row-1-col-id`)).toHaveTextContent(
+      "2",
+    );
     expect(
-      screen.getByTestId(`${testId}-cell-row-1-col-orgCode`),
-    ).toHaveTextContent("OSLI");
+      screen.getByTestId(`${testId}-cell-row-1-col-email`),
+    ).toHaveTextContent("email2@ucsb.edu");
 
     expect(screen.queryByText("Delete")).not.toBeInTheDocument();
     expect(screen.queryByText("Edit")).not.toBeInTheDocument();
@@ -161,8 +169,8 @@ describe("UCSBOrganizationTable tests", () => {
     render(
       <QueryClientProvider client={queryClient}>
         <MemoryRouter>
-          <UCSBOrganizationTable
-            ucsborganizations={ucsbOrganizationsFixtures.threeUCSBOrganization}
+          <ArticleTable
+            articles={articlesFixtures.threeArticles}
             currentUser={currentUser}
           />
         </MemoryRouter>
@@ -171,8 +179,11 @@ describe("UCSBOrganizationTable tests", () => {
 
     // assert - check that the expected content is rendered
     expect(
-      screen.getByTestId(`${testId}-cell-row-0-col-orgCode`),
-    ).toHaveTextContent("SKY");
+      await screen.findByTestId(`${testId}-cell-row-0-col-id`),
+    ).toHaveTextContent("1");
+    expect(
+      screen.getByTestId(`${testId}-cell-row-0-col-title`),
+    ).toHaveTextContent("sample 1");
 
     const editButton = screen.getByTestId(
       `${testId}-cell-row-0-col-Edit-button`,
@@ -184,9 +195,7 @@ describe("UCSBOrganizationTable tests", () => {
 
     // assert - check that the navigate function was called with the expected path
     await waitFor(() =>
-      expect(mockedNavigate).toHaveBeenCalledWith(
-        "/ucsborganizations/edit/SKY",
-      ),
+      expect(mockedNavigate).toHaveBeenCalledWith("/articles/edit/1"),
     );
   });
 
@@ -196,15 +205,15 @@ describe("UCSBOrganizationTable tests", () => {
 
     const axiosMock = new AxiosMockAdapter(axios);
     axiosMock
-      .onDelete("/api/ucsborganizations")
-      .reply(200, { message: "UCSBOrganization deleted" });
+      .onDelete("/api/articles")
+      .reply(200, { message: "Article deleted" });
 
     // act - render the component
     render(
       <QueryClientProvider client={queryClient}>
         <MemoryRouter>
-          <UCSBOrganizationTable
-            ucsborganizations={ucsbOrganizationsFixtures.threeUCSBOrganization}
+          <ArticleTable
+            articles={articlesFixtures.threeArticles}
             currentUser={currentUser}
           />
         </MemoryRouter>
@@ -212,10 +221,12 @@ describe("UCSBOrganizationTable tests", () => {
     );
 
     // assert - check that the expected content is rendered
-
     expect(
-      screen.getByTestId(`${testId}-cell-row-0-col-orgCode`),
-    ).toHaveTextContent("SKY");
+      await screen.findByTestId(`${testId}-cell-row-0-col-id`),
+    ).toHaveTextContent("1");
+    expect(
+      screen.getByTestId(`${testId}-cell-row-0-col-title`),
+    ).toHaveTextContent("sample 1");
 
     const deleteButton = screen.getByTestId(
       `${testId}-cell-row-0-col-Delete-button`,
@@ -228,6 +239,6 @@ describe("UCSBOrganizationTable tests", () => {
     // assert - check that the delete endpoint was called
 
     await waitFor(() => expect(axiosMock.history.delete.length).toBe(1));
-    expect(axiosMock.history.delete[0].params).toEqual({ orgCode: "SKY" });
+    expect(axiosMock.history.delete[0].params).toEqual({ id: 1 });
   });
 });

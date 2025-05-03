@@ -5,31 +5,27 @@ import { useBackendMutation } from "main/utils/useBackend";
 import {
   cellToAxiosParamsDelete,
   onDeleteSuccess,
-} from "main/utils/UCSBOrganizationUtils";
+} from "main/utils/ucsbdiningcommonsmenuitemUtils";
 import { useNavigate } from "react-router-dom";
 import { hasRole } from "main/utils/currentUser";
 
-export default function UCSBOrganizationTable({
-  ucsborganizations,
+export default function UCSBDiningCommonsMenuItemTable({
+  menuItems,
   currentUser,
-  testIdPrefix = "UCSBOrganizationTable",
+  testIdPrefix = "UCSBDiningCommonsMenuItemTable",
 }) {
   const navigate = useNavigate();
 
   const editCallback = (cell) => {
-    navigate(`/ucsborganizations/edit/${cell.row.values.orgCode}`);
+    navigate(`/ucsbdiningcommonsmenuitems/edit/${cell.row.values.id}`);
   };
-
-  // Stryker disable all : hard to test for query caching
 
   const deleteMutation = useBackendMutation(
     cellToAxiosParamsDelete,
     { onSuccess: onDeleteSuccess },
-    ["/api/ucsborganizations/all"],
+    ["/api/ucsbdiningcommonsmenuitem/all"],
   );
-  // Stryker restore all
 
-  // Stryker disable next-line all : TODO try to make a good test for this
   const deleteCallback = async (cell) => {
     deleteMutation.mutate(cell);
   };
@@ -37,24 +33,19 @@ export default function UCSBOrganizationTable({
   const columns = [
     {
       Header: "id",
-      accessor: "id", // accessor is the "key" in the data
+      accessor: "id",
     },
     {
-      Header: "OrgCode",
-      accessor: "orgCode",
+      Header: "Dining Commons Code",
+      accessor: "diningCommonsCode",
     },
     {
-      Header: "OrgTranslationShort",
-      accessor: "orgTranslationShort",
+      Header: "Name",
+      accessor: "name",
     },
     {
-      Header: "OrgTranslation",
-      accessor: "orgTranslation",
-    },
-    {
-      Header: "Inactive",
-      accessor: (row) => String(row.inactive),
-      id: "inactive",
+      Header: "Station",
+      accessor: "station",
     },
   ];
 
@@ -65,11 +56,5 @@ export default function UCSBOrganizationTable({
     );
   }
 
-  return (
-    <OurTable
-      data={ucsborganizations}
-      columns={columns}
-      testid={testIdPrefix}
-    />
-  );
+  return <OurTable data={menuItems} columns={columns} testid={testIdPrefix} />;
 }

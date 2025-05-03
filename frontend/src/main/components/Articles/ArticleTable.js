@@ -5,19 +5,15 @@ import { useBackendMutation } from "main/utils/useBackend";
 import {
   cellToAxiosParamsDelete,
   onDeleteSuccess,
-} from "main/utils/UCSBOrganizationUtils";
+} from "main/utils/articleUtils";
 import { useNavigate } from "react-router-dom";
 import { hasRole } from "main/utils/currentUser";
 
-export default function UCSBOrganizationTable({
-  ucsborganizations,
-  currentUser,
-  testIdPrefix = "UCSBOrganizationTable",
-}) {
+export default function ArticleTable({ articles, currentUser }) {
   const navigate = useNavigate();
 
   const editCallback = (cell) => {
-    navigate(`/ucsborganizations/edit/${cell.row.values.orgCode}`);
+    navigate(`/articles/edit/${cell.row.values.id}`);
   };
 
   // Stryker disable all : hard to test for query caching
@@ -25,7 +21,7 @@ export default function UCSBOrganizationTable({
   const deleteMutation = useBackendMutation(
     cellToAxiosParamsDelete,
     { onSuccess: onDeleteSuccess },
-    ["/api/ucsborganizations/all"],
+    ["/api/articles/all"],
   );
   // Stryker restore all
 
@@ -40,36 +36,33 @@ export default function UCSBOrganizationTable({
       accessor: "id", // accessor is the "key" in the data
     },
     {
-      Header: "OrgCode",
-      accessor: "orgCode",
+      Header: "Title",
+      accessor: "title",
     },
     {
-      Header: "OrgTranslationShort",
-      accessor: "orgTranslationShort",
+      Header: "Url",
+      accessor: "url",
     },
     {
-      Header: "OrgTranslation",
-      accessor: "orgTranslation",
+      Header: "Explanation",
+      accessor: "explanation",
     },
     {
-      Header: "Inactive",
-      accessor: (row) => String(row.inactive),
-      id: "inactive",
+      Header: "Email",
+      accessor: "email",
+    },
+    {
+      Header: "Date (iso format)",
+      accessor: "dateAdded",
     },
   ];
 
   if (hasRole(currentUser, "ROLE_ADMIN")) {
-    columns.push(ButtonColumn("Edit", "primary", editCallback, testIdPrefix));
+    columns.push(ButtonColumn("Edit", "primary", editCallback, "ArticleTable"));
     columns.push(
-      ButtonColumn("Delete", "danger", deleteCallback, testIdPrefix),
+      ButtonColumn("Delete", "danger", deleteCallback, "ArticleTable"),
     );
   }
 
-  return (
-    <OurTable
-      data={ucsborganizations}
-      columns={columns}
-      testid={testIdPrefix}
-    />
-  );
+  return <OurTable data={articles} columns={columns} testid={"ArticleTable"} />;
 }
