@@ -23,7 +23,7 @@ describe("ArticleTable tests", () => {
     "Url",
     "Explanation",
     "Email",
-    "Date (iso format)",
+    "Date Added",
   ];
   const expectedFields = [
     "id",

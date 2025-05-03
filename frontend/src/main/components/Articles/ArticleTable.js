@@ -52,7 +52,7 @@ export default function ArticleTable({ articles, currentUser }) {
       accessor: "email",
     },
     {
-      Header: "Date (iso format)",
+      Header: "Date Added",
       accessor: "dateAdded",
     },
   ];

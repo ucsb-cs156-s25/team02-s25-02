@@ -1,10 +1,11 @@
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
-import UCSBOrganizationCreatePage from "main/pages/UCSBOrganizations/UCSBOrganizationCreatePage";
+import ArticlesCreatePage from "main/pages/Articles/ArticlesCreatePage";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { MemoryRouter } from "react-router-dom";
 
 import { apiCurrentUserFixtures } from "fixtures/currentUserFixtures";
 import { systemInfoFixtures } from "fixtures/systemInfoFixtures";
+
 import axios from "axios";
 import AxiosMockAdapter from "axios-mock-adapter";
 
@@ -31,7 +32,7 @@ jest.mock("react-router-dom", () => {
   };
 });
 
-describe("UCSBOrganizationCreatePage tests", () => {
+describe("ArticlesCreatePage tests", () => {
   const axiosMock = new AxiosMockAdapter(axios);
 
   beforeEach(() => {
@@ -51,80 +52,86 @@ describe("UCSBOrganizationCreatePage tests", () => {
     render(
       <QueryClientProvider client={queryClient}>
         <MemoryRouter>
-          <UCSBOrganizationCreatePage />
+          <ArticlesCreatePage />
         </MemoryRouter>
       </QueryClientProvider>,
     );
 
     await waitFor(() => {
-      expect(screen.getByLabelText("OrgCode")).toBeInTheDocument();
+      expect(screen.getByLabelText("Title")).toBeInTheDocument();
     });
   });
 
-  test("on submit, makes request to backend, and redirects to /ucsborganizations", async () => {
+  test("on submit, makes request to backend, and redirects to /articles", async () => {
     const queryClient = new QueryClient();
-    const organization = {
-      orgCode: "ZPY",
-      orgTranslationShort: "ZETA PHI RHO",
-      orgTranslation: "ZETA PHI RHO",
-      inactive: false,
+    const article = {
+      id: 1,
+      title: "sample 1",
+      url: "https://www.example.com/sample1",
+      explanation: "sample 1 description",
+      email: "email1@ucsb.edu",
+      dateAdded: "2022-01-02T12:00:00",
     };
 
-    axiosMock.onPost("/api/ucsborganizations/post").reply(202, organization);
+    axiosMock.onPost("/api/articles/post").reply(202, article);
 
     render(
       <QueryClientProvider client={queryClient}>
         <MemoryRouter>
-          <UCSBOrganizationCreatePage />
+          <ArticlesCreatePage />
         </MemoryRouter>
       </QueryClientProvider>,
     );
 
     await waitFor(() => {
-      expect(screen.getByLabelText("OrgCode")).toBeInTheDocument();
+      expect(screen.getByLabelText("Title")).toBeInTheDocument();
     });
 
-    const orgCodeInput = screen.getByLabelText("OrgCode");
-    expect(orgCodeInput).toBeInTheDocument();
-    expect(orgCodeInput).not.toBeDisabled();
+    const titleInput = screen.getByLabelText("Title");
+    expect(titleInput).toBeInTheDocument();
 
-    const orgTransShortInput = screen.getByLabelText("OrgTranslationShort");
-    expect(orgTransShortInput).toBeInTheDocument();
+    const urlInput = screen.getByLabelText("Url");
+    expect(urlInput).toBeInTheDocument();
 
-    const orgTransInput = screen.getByLabelText("OrgTranslation");
-    expect(orgTransInput).toBeInTheDocument();
+    const explanationInput = screen.getByLabelText("Explanation");
+    expect(explanationInput).toBeInTheDocument();
 
-    const inactiveInput = screen.getByLabelText("Inactive (unchecked = false)");
-    expect(inactiveInput).toBeInTheDocument();
+    const emailInput = screen.getByLabelText("Email");
+    expect(emailInput).toBeInTheDocument();
+
+    const dateAddedInput = screen.getByLabelText("Date Added");
+    expect(dateAddedInput).toBeInTheDocument();
 
     const createButton = screen.getByText("Create");
     expect(createButton).toBeInTheDocument();
 
-    fireEvent.change(orgCodeInput, { target: { value: "ZPY" } });
-    fireEvent.change(orgTransShortInput, {
-      target: { value: "ZETA PHI RHO" },
+    fireEvent.change(titleInput, { target: { value: "sample 1" } });
+    fireEvent.change(urlInput, {
+      target: { value: "https://www.example.com/sample1" },
     });
-    fireEvent.change(orgTransInput, {
-      target: { value: "ZETA PHI RHO" },
+    fireEvent.change(explanationInput, {
+      target: { value: "sample 1 description" },
     });
-    fireEvent.change(inactiveInput, {
-      target: { value: false },
+    fireEvent.change(emailInput, { target: { value: "email1@ucsb.edu" } });
+    fireEvent.change(dateAddedInput, {
+      target: { value: "2022-01-02T12:00:00" },
     });
     fireEvent.click(createButton);
 
     await waitFor(() => expect(axiosMock.history.post.length).toBe(1));
 
     expect(axiosMock.history.post[0].params).toEqual({
-      orgCode: "ZPY",
-      orgTranslationShort: "ZETA PHI RHO",
-      orgTranslation: "ZETA PHI RHO",
-      inactive: false,
+      title: "sample 1",
+      url: "https://www.example.com/sample1",
+      explanation: "sample 1 description",
+      email: "email1@ucsb.edu",
+      dateAdded: "2022-01-02T12:00",
     });
 
     // assert - check that the toast was called with the expected message
-    expect(mockToast).toBeCalledWith(
-      "New UCSB Organization Created - orgCode: ZPY",
+    expect(mockToast).toHaveBeenCalledWith(
+      "New article Created - id: 1 title: sample 1",
     );
-    expect(mockNavigate).toBeCalledWith({ to: "/ucsborganizations" });
+    expect(mockNavigate).toHaveBeenCalledWith({ to: "/articles" });
   });
 });
