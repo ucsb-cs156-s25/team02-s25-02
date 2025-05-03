@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for components/UCSBOrganization/UCSBOrganizationForm.js</title>
+    <title>Code coverage report for components/Articles/ArticleForm.js</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../../prettify.css" />
     <link rel="stylesheet" href="../../base.css" />
@@ -19,20 +19,20 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../../index.html">All files</a> / <a href="index.html">components/UCSBOrganization</a> UCSBOrganizationForm.js</h1>
+        <h1><a href="../../index.html">All files</a> / <a href="index.html">components/Articles</a> ArticleForm.js</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>5/5</span>
+                <span class='fraction'>6/6</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>5/5</span>
+                <span class='fraction'>7/7</span>
             </div>
         
             
@@ -46,7 +46,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>5/5</span>
+                <span class='fraction'>6/6</span>
             </div>
         
             
@@ -187,7 +187,22 @@
 <a name='L122'></a><a href='#L122'>122</a>
 <a name='L123'></a><a href='#L123'>123</a>
 <a name='L124'></a><a href='#L124'>124</a>
-<a name='L125'></a><a href='#L125'>125</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L125'></a><a href='#L125'>125</a>
+<a name='L126'></a><a href='#L126'>126</a>
+<a name='L127'></a><a href='#L127'>127</a>
+<a name='L128'></a><a href='#L128'>128</a>
+<a name='L129'></a><a href='#L129'>129</a>
+<a name='L130'></a><a href='#L130'>130</a>
+<a name='L131'></a><a href='#L131'>131</a>
+<a name='L132'></a><a href='#L132'>132</a>
+<a name='L133'></a><a href='#L133'>133</a>
+<a name='L134'></a><a href='#L134'>134</a>
+<a name='L135'></a><a href='#L135'>135</a>
+<a name='L136'></a><a href='#L136'>136</a>
+<a name='L137'></a><a href='#L137'>137</a>
+<a name='L138'></a><a href='#L138'>138</a>
+<a name='L139'></a><a href='#L139'>139</a>
+<a name='L140'></a><a href='#L140'>140</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -201,14 +216,29 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">8x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -315,7 +345,7 @@
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 &nbsp;
-function UCSBOrganizationForm({
+function ArticleForm({
   initialContents,
   submitAction,
   buttonLabel = "Create",
@@ -330,7 +360,15 @@ function UCSBOrganizationForm({
 &nbsp;
   const navigate = useNavigate();
 &nbsp;
-  const testIdPrefix = "UCSBOrganizationForm";
+  // For explanation, see: https://stackoverflow.com/questions/3143070/javascript-regex-iso-datetime
+  // Note that even this complex regex may still need some tweaks
+&nbsp;
+  // Stryker disable Regex
+  const isodate_regex =
+    /(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d\.\d+)|(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d)|(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d)/i;
+  // Stryker restore Regex
+&nbsp;
+  const testIdPrefix = "ArticleForm";
 &nbsp;
   return (
     &lt;Form onSubmit={handleSubmit(submitAction)}&gt;
@@ -349,80 +387,87 @@ function UCSBOrganizationForm({
       )}
 &nbsp;
       &lt;Form.Group className="mb-3"&gt;
-        &lt;Form.Label htmlFor="orgcode"&gt;OrgCode&lt;/Form.Label&gt;
+        &lt;Form.Label htmlFor="title"&gt;Title&lt;/Form.Label&gt;
         &lt;Form.Control
-          data-testid={testIdPrefix + "-orgcode"}
-          id="orgcode"
+          //   data-testid={testIdPrefix + "-title"}
+          id="title"
           type="text"
-          isInvalid={Boolean(errors.orgCode)}
-          {...register("orgCode", {
-            required: "OrgCode is required.",
-            maxLength: {
-              value: 10,
-              message: "Max length 10 characters",
-            },
+          isInvalid={Boolean(errors.title)}
+          {...register("title", {
+            required: "Title is required.",
           })}
         /&gt;
         &lt;Form.Control.Feedback type="invalid"&gt;
-          {errors.orgCode?.message}
+          {errors.title?.message}
         &lt;/Form.Control.Feedback&gt;
       &lt;/Form.Group&gt;
 &nbsp;
       &lt;Form.Group className="mb-3"&gt;
-        &lt;Form.Label htmlFor="orgtranslationshort"&gt;
-          OrgTranslationShort
-        &lt;/Form.Label&gt;
+        &lt;Form.Label htmlFor="url"&gt;Url&lt;/Form.Label&gt;
         &lt;Form.Control
-          data-testid={testIdPrefix + "-orgtranslationshort"}
-          id="orgtranslationshort"
+          //   data-testid={testIdPrefix + "-url"}
+          id="url"
           type="text"
-          isInvalid={Boolean(errors.orgTranslationShort)}
-          {...register("orgTranslationShort", {
-            required: "OrgTranslationShort is required.",
-            maxLength: {
-              value: 30,
-              message: "Max length 30 characters",
-            },
+          isInvalid={Boolean(errors.url)}
+          {...register("url", {
+            required: "Url is required.",
           })}
         /&gt;
         &lt;Form.Control.Feedback type="invalid"&gt;
-          {errors.orgTranslationShort?.message}
+          {errors.url?.message}
         &lt;/Form.Control.Feedback&gt;
       &lt;/Form.Group&gt;
 &nbsp;
       &lt;Form.Group className="mb-3"&gt;
-        &lt;Form.Label htmlFor="orgtranslation"&gt;OrgTranslation&lt;/Form.Label&gt;
+        &lt;Form.Label htmlFor="explanation"&gt;Explanation&lt;/Form.Label&gt;
         &lt;Form.Control
-          data-testid={testIdPrefix + "-orgtranslation"}
-          id="orgtranslation"
+          //   data-testid={testIdPrefix + "-explanation"}
+          id="explanation"
           type="text"
-          isInvalid={Boolean(errors.orgTranslation)}
-          {...register("orgTranslation", {
-            required: "OrgTranslation is required.",
-            maxLength: {
-              value: 30,
-              message: "Max length 50 characters",
-            },
+          isInvalid={Boolean(errors.explanation)}
+          {...register("explanation", {
+            required: "Explanation is required.",
           })}
         /&gt;
         &lt;Form.Control.Feedback type="invalid"&gt;
-          {errors.orgTranslation?.message}
+          {errors.explanation?.message}
         &lt;/Form.Control.Feedback&gt;
       &lt;/Form.Group&gt;
 &nbsp;
       &lt;Form.Group className="mb-3"&gt;
-        &lt;Form.Label htmlFor="inactive"&gt;Inactive (unchecked = false)&lt;/Form.Label&gt;
-        &lt;Form.Check
-          data-testid={testIdPrefix + "-inactive"}
-          type="checkbox"
-          id="inactive"
-          {...register("inactive")}
+        &lt;Form.Label htmlFor="email"&gt;Email&lt;/Form.Label&gt;
+        &lt;Form.Control
+          //   data-testid={testIdPrefix + "-email"}
+          id="email"
+          type="text"
+          isInvalid={Boolean(errors.email)}
+          {...register("email", {
+            required: "Email is required.",
+          })}
         /&gt;
+        &lt;Form.Control.Feedback type="invalid"&gt;
+          {errors.email?.message}
+        &lt;/Form.Control.Feedback&gt;
       &lt;/Form.Group&gt;
 &nbsp;
-      &lt;Button type="submit" data-testid={testIdPrefix + "-submit"}&gt;
-        {buttonLabel}
-      &lt;/Button&gt;
+      &lt;Form.Group className="mb-3"&gt;
+        &lt;Form.Label htmlFor="dateAdded"&gt;Date (iso format)&lt;/Form.Label&gt;
+        &lt;Form.Control
+          data-testid="ArticleForm-dateAdded"
+          id="dateAdded"
+          type="datetime-local"
+          isInvalid={Boolean(errors.dateAdded)}
+          {...register("dateAdded", {
+            required: true,
+            pattern: isodate_regex,
+          })}
+        /&gt;
+        &lt;Form.Control.Feedback type="invalid"&gt;
+          {errors.dateAdded &amp;&amp; "DateAdded is required. "}
+        &lt;/Form.Control.Feedback&gt;
+      &lt;/Form.Group&gt;
+&nbsp;
+      &lt;Button type="submit"&gt;{buttonLabel}&lt;/Button&gt;
       &lt;Button
         variant="Secondary"
         onClick={() =&gt; navigate(-1)}
@@ -434,7 +479,7 @@ function UCSBOrganizationForm({
   );
 }
 &nbsp;
-export default UCSBOrganizationForm;
+export default ArticleForm;
 &nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
