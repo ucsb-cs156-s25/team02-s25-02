@@ -1,5 +1,3 @@
-// src/main/pages/UCSBDiningCommonsMenuItem/UCSBDiningCommonsMenuItemEditPage.js
-
 import React from "react";
 import BasicLayout from "main/layouts/BasicLayout/BasicLayout";
 import { useParams, Navigate } from "react-router-dom";
