@@ -66,12 +66,12 @@ describe("RecommendationRequestCreatePage tests", () => {
     const queryClient = new QueryClient();
     const recommendationRequest = {
       id: 17,
-      requesterEmailField: "requester@ucsb.edu",
-      professorEmailField: "professor@ucsb.edu",
-      explanationField: "I need a recommendation.",
-      dateRequestedField: "2022-02-02T00:00",
-      dateNeededField: "2022-02-03T00:00",
-      doneField: false,
+      requesterEmail: "requester@ucsb.edu",
+      professorEmail: "professor@ucsb.edu",
+      explanation: "I need a recommendation.",
+      dateRequested: "2022-02-02T00:00",
+      dateNeeded: "2022-02-03T00:00",
+      done: false,
     };
 
     axiosMock
