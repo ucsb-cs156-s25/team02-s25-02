@@ -71,7 +71,7 @@ describe("RecommendationRequestCreatePage tests", () => {
       explanation: "I need a recommendation.",
       dateRequested: "2022-02-02T00:00",
       dateNeeded: "2022-02-03T00:00",
-      doneField: "false",
+      done: false,
     };
 
     axiosMock
@@ -92,40 +92,40 @@ describe("RecommendationRequestCreatePage tests", () => {
       ).toBeInTheDocument();
     });
 
-    const requesterEmailField = screen.getByTestId(
+    const requesterEmail = screen.getByTestId(
       "RecommendationRequestForm-requesterEmail",
     );
-    const professorEmailField = screen.getByTestId(
+    const professorEmail = screen.getByTestId(
       "RecommendationRequestForm-professorEmail",
     );
-    const explanationField = screen.getByTestId(
+    const explanation = screen.getByTestId(
       "RecommendationRequestForm-explanation",
     );
-    const dateRequestedField = screen.getByTestId(
+    const dateRequested = screen.getByTestId(
       "RecommendationRequestForm-dateRequested",
     );
-    const dateNeededField = screen.getByTestId(
+    const dateNeeded = screen.getByTestId(
       "RecommendationRequestForm-dateNeeded",
     );
-    const doneField = screen.getByTestId("RecommendationRequestForm-done");
+    const done = screen.getByTestId("RecommendationRequestForm-done");
     const submitButton = screen.getByTestId("RecommendationRequestForm-submit");
 
-    fireEvent.change(requesterEmailField, {
+    fireEvent.change(requesterEmail, {
       target: { value: "requester@ucsb.edu" },
     });
-    fireEvent.change(professorEmailField, {
+    fireEvent.change(professorEmail, {
       target: { value: "professor@ucsb.edu" },
     });
-    fireEvent.change(explanationField, {
+    fireEvent.change(explanation, {
       target: { value: "I need a recommendation." },
     });
-    fireEvent.change(dateRequestedField, {
+    fireEvent.change(dateRequested, {
       target: { value: "2022-02-02T00:00" },
     });
-    fireEvent.change(dateNeededField, {
+    fireEvent.change(dateNeeded, {
       target: { value: "2022-02-03T00:00" },
     });
-    fireEvent.change(doneField, { target: { value: "false" } });
+    fireEvent.change(done, { target: { value: false } });
 
     expect(submitButton).toBeInTheDocument();
 
@@ -139,7 +139,7 @@ describe("RecommendationRequestCreatePage tests", () => {
       explanation: "I need a recommendation.",
       dateRequested: "2022-02-02T00:00",
       dateNeeded: "2022-02-03T00:00",
-      done: "false",
+      done: false,
     });
 
     expect(mockToast).toBeCalledWith(

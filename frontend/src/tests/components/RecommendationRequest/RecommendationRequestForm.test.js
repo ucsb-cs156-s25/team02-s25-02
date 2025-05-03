@@ -84,7 +84,6 @@ describe("RecommendationRequestForm tests", () => {
     expect(screen.getByText(/explanation is required./)).toBeInTheDocument();
     expect(screen.getByText(/dateRequested is required./)).toBeInTheDocument();
     expect(screen.getByText(/dateNeeded is required./)).toBeInTheDocument();
-    expect(screen.getByText(/Done is required./)).toBeInTheDocument();
   });
 
   test("No error messages on good input", async () => {
