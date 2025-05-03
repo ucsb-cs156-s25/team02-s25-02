@@ -84,9 +84,9 @@ describe("UCSBOrganizationIndexPage tests", () => {
     );
 
     await waitFor(() => {
-    expect(
-      screen.getByTestId(`${testId}-cell-row-0-col-orgCode`),
-    ).toHaveTextContent("SKY");
+      expect(
+        screen.getByTestId(`${testId}-cell-row-0-col-orgCode`),
+      ).toHaveTextContent("SKY");
     });
     expect(
       screen.getByTestId(`${testId}-cell-row-1-col-orgCode`),
@@ -94,7 +94,6 @@ describe("UCSBOrganizationIndexPage tests", () => {
     expect(
       screen.getByTestId(`${testId}-cell-row-2-col-orgCode`),
     ).toHaveTextContent("KRC");
-
 
     const createUCSBOrganizationButton = screen.queryByText(
       "Create UCSB Organization",

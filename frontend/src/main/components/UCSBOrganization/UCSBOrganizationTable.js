@@ -35,10 +35,11 @@ export default function UCSBOrganizationTable({
   };
 
   const columns = [
-    {
-      Header: "id",
-      accessor: "id", // accessor is the "key" in the data
-    },
+    // {
+    //   Header: "id",
+    //   accessor: "id", // accessor is the "key" in the data
+    // },
+
     {
       Header: "OrgCode",
       accessor: "orgCode",
