@@ -28,7 +28,6 @@ describe("UCSBDiningCommonsMenuItemCreatePage tests", () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
-
     axiosMock.reset();
     axiosMock.resetHistory();
     axiosMock
