@@ -5,7 +5,6 @@ export function onDeleteSuccess(message) {
   toast(message);
 }
 
-
 export function cellToAxiosParamsDelete(cell) {
   return {
     url: "/api/recommendationrequests",
