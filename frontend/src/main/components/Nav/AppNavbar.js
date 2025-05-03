@@ -32,20 +32,12 @@ export default function AppNavbar({
 
           <Nav className="me-auto">
             {systemInfo?.springH2ConsoleEnabled && (
-              <>
-                <Nav.Link href="/h2-console">H2Console</Nav.Link>
-              </>
+              <Nav.Link href="/h2-console">H2Console</Nav.Link>
             )}
             {systemInfo?.showSwaggerUILink && (
-              <>
-                <Nav.Link href="/swagger-ui/index.html">Swagger</Nav.Link>
-              </>
+              <Nav.Link href="/swagger-ui/index.html">Swagger</Nav.Link>
             )}
           </Nav>
-
-          <>
-            {/* be sure that each NavDropdown has a unique id and data-testid  */}
-          </>
 
           <Navbar.Collapse className="justify-content-between">
             <Nav className="mr-auto">
@@ -75,10 +67,12 @@ export default function AppNavbar({
                   <Nav.Link as={Link} to="/placeholder">
                     Placeholder
                   </Nav.Link>
+                  {/* NEW LINK FOR UCSBDiningCommonsMenuItem */}
+                  <Nav.Link as={Link} to="/diningcommonsmenuitem">
+                    UCSB DiningCommonsMenuItems
+                  </Nav.Link>
                 </>
-              ) : (
-                <></>
-              )}
+              ) : null}
             </Nav>
 
             <Nav className="ml-auto">
