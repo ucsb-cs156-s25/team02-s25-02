@@ -138,19 +138,13 @@ function RecommendationRequestForm({
 
         <Col>
           <Form.Group className="mb-3">
-            <Form.Label htmlFor="done">Done</Form.Label>
-            <Form.Control
+            <Form.Label htmlFor="done">Done (unchecked = false)</Form.Label>
+            <Form.Check
               data-testid={testIdPrefix + "-done"}
               id="done"
-              type="text"
-              isInvalid={Boolean(errors.done)}
-              {...register("done", {
-                required: "Done is required.",
-              })}
+              type="checkbox"
+              {...register("done")}
             />
-            <Form.Control.Feedback type="invalid">
-              {errors.done?.message}
-            </Form.Control.Feedback>
           </Form.Group>
         </Col>
       </Row>

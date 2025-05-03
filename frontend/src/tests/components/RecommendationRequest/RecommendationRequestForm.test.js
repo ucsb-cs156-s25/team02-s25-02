@@ -56,7 +56,6 @@ describe("RecommendationRequestForm tests", () => {
     const dateNeededField = screen.getByTestId(
       "RecommendationRequestForm-dateNeeded",
     );
-    const doneField = screen.getByTestId("RecommendationRequestForm-done");
     const submitButton = screen.getByTestId("RecommendationRequestForm-cancel");
 
     fireEvent.change(requesterEmailField, { target: { value: "bad-input" } });
@@ -64,7 +63,6 @@ describe("RecommendationRequestForm tests", () => {
     fireEvent.change(explanationField, { target: { value: "bad-input" } });
     fireEvent.change(dateRequestedField, { target: { value: "bad-input" } });
     fireEvent.change(dateNeededField, { target: { value: "bad-input" } });
-    fireEvent.change(doneField, { target: { value: "bad-input" } });
     fireEvent.click(submitButton);
   });
 
@@ -84,7 +82,6 @@ describe("RecommendationRequestForm tests", () => {
     expect(screen.getByText(/explanation is required./)).toBeInTheDocument();
     expect(screen.getByText(/dateRequested is required./)).toBeInTheDocument();
     expect(screen.getByText(/dateNeeded is required./)).toBeInTheDocument();
-    expect(screen.getByText(/Done is required./)).toBeInTheDocument();
   });
 
   test("No error messages on good input", async () => {
@@ -127,7 +124,7 @@ describe("RecommendationRequestForm tests", () => {
       },
     );
     fireEvent.change(screen.getByTestId("RecommendationRequestForm-done"), {
-      target: { value: "false" },
+      target: { checked: false },
     });
 
     fireEvent.click(screen.getByTestId("RecommendationRequestForm-submit"));
