@@ -1,7 +1,6 @@
 const ucsbOrganizationsFixtures = {
   oneUCSBOrganization: [
     {
-      id: 1,
       orgCode: "ZPY",
       orgTranslationShort: "ZETA PHI RHO",
       orgTranslation: "ZETA PHI RHO",
@@ -11,7 +10,6 @@ const ucsbOrganizationsFixtures = {
 
   threeUCSBOrganization: [
     {
-      id: 1,
       orgCode: "SKY",
       orgTranslationShort: "SKYDIVING CLUB",
       orgTranslation: "SKYDIVING CLUB AT UCSB",
@@ -19,7 +17,6 @@ const ucsbOrganizationsFixtures = {
     },
 
     {
-      id: 2,
       orgCode: "OSLI",
       orgTranslationShort: "STUDENT LIFE",
       orgTranslation: "OFFICE OF STUDENT LIFE",
@@ -27,7 +24,6 @@ const ucsbOrganizationsFixtures = {
     },
 
     {
-      id: 3,
       orgCode: "KRC",
       orgTranslationShort: "KOREAN RADIO CL",
       orgTranslation: "KOREAN RADIO CLUB",
