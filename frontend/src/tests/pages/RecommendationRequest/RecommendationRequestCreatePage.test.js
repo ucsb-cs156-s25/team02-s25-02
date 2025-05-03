@@ -74,7 +74,9 @@ describe("RecommendationRequestCreatePage tests", () => {
       doneField: false,
     };
 
-    axiosMock.onPost("/api/recommendationrequests/post").reply(202, recommendationRequest);
+    axiosMock
+      .onPost("/api/recommendationrequests/post")
+      .reply(202, recommendationRequest);
 
     render(
       <QueryClientProvider client={queryClient}>
@@ -90,17 +92,33 @@ describe("RecommendationRequestCreatePage tests", () => {
       ).toBeInTheDocument();
     });
 
-    const requesterEmailField = screen.getByTestId("RecommendationRequestForm-requesterEmail");
-    const professorEmailField = screen.getByTestId("RecommendationRequestForm-professorEmail");
-    const explanationField = screen.getByTestId("RecommendationRequestForm-explanation");
-    const dateRequestedField = screen.getByTestId("RecommendationRequestForm-dateRequested");
-    const dateNeededField = screen.getByTestId("RecommendationRequestForm-dateNeeded");
+    const requesterEmailField = screen.getByTestId(
+      "RecommendationRequestForm-requesterEmail",
+    );
+    const professorEmailField = screen.getByTestId(
+      "RecommendationRequestForm-professorEmail",
+    );
+    const explanationField = screen.getByTestId(
+      "RecommendationRequestForm-explanation",
+    );
+    const dateRequestedField = screen.getByTestId(
+      "RecommendationRequestForm-dateRequested",
+    );
+    const dateNeededField = screen.getByTestId(
+      "RecommendationRequestForm-dateNeeded",
+    );
     const doneField = screen.getByTestId("RecommendationRequestForm-done");
     const submitButton = screen.getByTestId("RecommendationRequestForm-submit");
 
-    fireEvent.change(requesterEmailField, { target: { value: "requester@ucsb.edu" } });
-    fireEvent.change(professorEmailField, { target: { value: "professor@ucsb.edu" } });
-    fireEvent.change(explanationField, { target: { value: "I need a recommendation." } });
+    fireEvent.change(requesterEmailField, {
+      target: { value: "requester@ucsb.edu" },
+    });
+    fireEvent.change(professorEmailField, {
+      target: { value: "professor@ucsb.edu" },
+    });
+    fireEvent.change(explanationField, {
+      target: { value: "I need a recommendation." },
+    });
     fireEvent.change(dateRequestedField, {
       target: { value: "2022-02-02T00:00" },
     });
