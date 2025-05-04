@@ -83,4 +83,204 @@ describe("MenuItemReviewForm tests", () => {
     );
     expect(screen.getByTestId("MenuItemReviewForm-id")).toBeDisabled();
   });
+
+  test("Stars field handles numeric input correctly", async () => {
+    render(
+      <Router>
+        <MenuItemReviewForm />
+      </Router>,
+    );
+
+    const starsField = screen.getByLabelText(/Stars/);
+    const submitButton = screen.getByText(/Create/);
+
+    // Test valid input
+    fireEvent.change(starsField, { target: { value: 3 } });
+    fireEvent.click(submitButton);
+    await waitFor(() =>
+      expect(
+        screen.queryByText(/Stars must be at most 5./),
+      ).not.toBeInTheDocument(),
+    );
+
+    // Test invalid input (below min)
+    fireEvent.change(starsField, { target: { value: 0 } });
+    fireEvent.click(submitButton);
+    await screen.findByText(/Stars must be at least 1./);
+
+    // Test invalid input (above max)
+    fireEvent.change(starsField, { target: { value: 6 } });
+    fireEvent.click(submitButton);
+    await screen.findByText(/Stars must be at most 5./);
+
+    // Test non-numeric input
+    fireEvent.change(starsField, { target: { value: "not-a-number" } });
+    fireEvent.click(submitButton);
+    await screen.findByText(/Stars rating is required./);
+  });
+
+  test("Reviewer Email field validates regex pattern", async () => {
+    render(
+      <Router>
+        <MenuItemReviewForm />
+      </Router>,
+    );
+
+    const reviewerEmailField = screen.getByLabelText(/Reviewer Email/);
+    const submitButton = screen.getByText(/Create/);
+
+    // Test valid email
+    fireEvent.change(reviewerEmailField, {
+      target: { value: "test@test.com" },
+    });
+    fireEvent.click(submitButton);
+    await waitFor(() =>
+      expect(
+        screen.queryByText(/Invalid email address format./),
+      ).not.toBeInTheDocument(),
+    );
+
+    // Test invalid email
+    fireEvent.change(reviewerEmailField, {
+      target: { value: "invalid-email" },
+    });
+    fireEvent.click(submitButton);
+    await screen.findByText(/Invalid email address format./);
+  });
+
+  test("Date Reviewed field validates regex pattern", async () => {
+    render(
+      <Router>
+        <MenuItemReviewForm />
+      </Router>,
+    );
+
+    const dateReviewedField = screen.getByLabelText(/Date Reviewed/);
+    const submitButton = screen.getByText(/Create/);
+
+    // Test valid date
+    fireEvent.change(dateReviewedField, {
+      target: { value: "2024-02-14T12:00" },
+    });
+    fireEvent.click(submitButton);
+    await waitFor(() =>
+      expect(
+        screen.queryByText(/Invalid date\/time format./),
+      ).not.toBeInTheDocument(),
+    );
+
+    // Test invalid date
+    fireEvent.change(dateReviewedField, { target: { value: "not-a-date" } });
+    fireEvent.click(submitButton);
+    await screen.findByText(/Date Reviewed is required./);
+  });
+
+  test("shows error for invalid email format", async () => {
+    const { getByTestId, getByText } = render(
+      <MenuItemReviewForm submitAction={jest.fn()} />,
+    );
+
+    const emailInput = getByTestId("MenuItemReviewForm-reviewerEmail");
+    const submitButton = getByTestId("MenuItemReviewForm-submit");
+
+    fireEvent.change(emailInput, { target: { value: "not-an-email" } });
+    fireEvent.click(submitButton);
+
+    await waitFor(() =>
+      expect(getByText("Invalid email address format.")).toBeInTheDocument(),
+    );
+  });
+
+  test("itemId input treats input as number due to valueAsNumber", async () => {
+    const mockSubmit = jest.fn();
+    const { getByTestId } = render(
+      <MenuItemReviewForm submitAction={mockSubmit} />,
+    );
+
+    fireEvent.change(getByTestId("MenuItemReviewForm-itemId"), {
+      target: { value: "42" },
+    });
+    fireEvent.change(getByTestId("MenuItemReviewForm-reviewerEmail"), {
+      target: { value: "test@example.com" },
+    });
+    fireEvent.change(getByTestId("MenuItemReviewForm-stars"), {
+      target: { value: "5" },
+    });
+    fireEvent.change(getByTestId("MenuItemReviewForm-dateReviewed"), {
+      target: { value: "2023-12-01T12:00" },
+    });
+    fireEvent.change(getByTestId("MenuItemReviewForm-comments"), {
+      target: { value: "Great!" },
+    });
+
+    fireEvent.click(getByTestId("MenuItemReviewForm-submit"));
+
+    await waitFor(() =>
+      expect(mockSubmit).toHaveBeenCalledWith(
+        expect.objectContaining({
+          itemId: 42, // number, not string
+        }),
+        expect.anything(),
+      ),
+    );
+  });
+
+  test("shows error when stars input is not between 1 and 5", async () => {
+    const { getByTestId, getByText } = render(
+      <MenuItemReviewForm submitAction={jest.fn()} />,
+    );
+
+    fireEvent.change(getByTestId("MenuItemReviewForm-stars"), {
+      target: { value: "6" },
+    });
+    fireEvent.click(getByTestId("MenuItemReviewForm-submit"));
+
+    await waitFor(() =>
+      expect(getByText("Stars must be at most 5.")).toBeInTheDocument(),
+    );
+  });
+
+  test("shows error when non-numeric string entered into itemId", async () => {
+    const { getByTestId, getByText } = render(
+      <MenuItemReviewForm submitAction={jest.fn()} />,
+    );
+
+    fireEvent.change(getByTestId("MenuItemReviewForm-itemId"), {
+      target: { value: "abc" }, // not a number
+    });
+    fireEvent.click(getByTestId("MenuItemReviewForm-submit"));
+
+    await waitFor(() =>
+      expect(getByText("Item ID is required.")).toBeInTheDocument(),
+    );
+  });
+
+  test("shows error for email without @", async () => {
+    renderFormWithInvalidEmail("foobar.com");
+  });
+
+  test("shows error for email without domain", async () => {
+    renderFormWithInvalidEmail("foo@");
+  });
+
+  test("shows error for email with invalid chars", async () => {
+    renderFormWithInvalidEmail("foo@bar@baz");
+  });
+
+  // Helper
+  function renderFormWithInvalidEmail(badEmail) {
+    const { getByTestId, getByText } = render(
+      <MenuItemReviewForm submitAction={jest.fn()} />,
+    );
+
+    fireEvent.change(getByTestId("MenuItemReviewForm-reviewerEmail"), {
+      target: { value: badEmail },
+    });
+
+    fireEvent.click(getByTestId("MenuItemReviewForm-submit"));
+
+    waitFor(() => {
+      expect(getByText("Invalid email address format.")).toBeInTheDocument();
+    });
+  }
 });

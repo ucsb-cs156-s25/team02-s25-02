@@ -126,4 +126,52 @@ describe("MenuItemReviewTable tests", () => {
       expect(mockedNavigate).toHaveBeenCalledWith("/menuitemreview/edit/1"),
     );
   });
+
+  test("Edit and Delete buttons are not present for ordinary user", async () => {
+    const currentUser = currentUserFixtures.userOnly;
+    const reviews = menuItemReviewFixtures.menuItemReviews;
+
+    render(
+      <QueryClientProvider client={queryClient}>
+        <MemoryRouter>
+          <MenuItemReviewTable reviews={reviews} currentUser={currentUser} />
+        </MemoryRouter>
+      </QueryClientProvider>,
+    );
+
+    await waitFor(() => {
+      expect(
+        screen.queryByTestId("MenuItemReviewTable-cell-row-0-col-Edit-button"),
+      ).not.toBeInTheDocument();
+      expect(
+        screen.queryByTestId(
+          "MenuItemReviewTable-cell-row-0-col-Delete-button",
+        ),
+      ).not.toBeInTheDocument();
+    });
+  });
+
+  test("Edit and Delete buttons have correct variants for admin user", async () => {
+    const currentUser = currentUserFixtures.adminUser;
+    const reviews = menuItemReviewFixtures.menuItemReviews;
+
+    render(
+      <QueryClientProvider client={queryClient}>
+        <MemoryRouter>
+          <MenuItemReviewTable reviews={reviews} currentUser={currentUser} />
+        </MemoryRouter>
+      </QueryClientProvider>,
+    );
+
+    const editButton = await screen.findByTestId(
+      "MenuItemReviewTable-cell-row-0-col-Edit-button",
+    );
+    const deleteButton = await screen.findByTestId(
+      "MenuItemReviewTable-cell-row-0-col-Delete-button",
+    );
+
+    // Bootstrap v5 uses btn-primary and btn-danger for variants
+    expect(editButton.className).toMatch(/btn-primary/);
+    expect(deleteButton.className).toMatch(/btn-danger/);
+  });
 });

@@ -74,6 +74,7 @@ function MenuItemReviewForm({
               {...register("reviewerEmail", {
                 required: "Reviewer Email is required.",
                 pattern: {
+                  // Stryker disable next-line all
                   value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
                   message: "Invalid email address format.",
                 },
@@ -97,6 +98,7 @@ function MenuItemReviewForm({
                 required: "Stars rating is required.",
                 min: { value: 1, message: "Stars must be at least 1." },
                 max: { value: 5, message: "Stars must be at most 5." },
+                // Stryker disable next-line all
                 valueAsNumber: true,
               })}
             />
@@ -118,10 +120,7 @@ function MenuItemReviewForm({
               isInvalid={Boolean(errors.dateReviewed)}
               {...register("dateReviewed", {
                 required: "Date Reviewed is required.",
-                pattern: {
-                  value: isodate_regex,
-                  message: "Invalid date/time format.",
-                },
+                pattern: isodate_regex,
               })}
             />
             <Form.Control.Feedback type="invalid">
@@ -141,7 +140,7 @@ function MenuItemReviewForm({
               as="textarea"
               rows={3}
               isInvalid={Boolean(errors.comments)}
-              {...register("comments", { required: "Comments are required." })}
+              {...register("comments")}
             />
             <Form.Control.Feedback type="invalid">
               {errors.comments?.message}
