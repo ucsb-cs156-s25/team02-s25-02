@@ -18,14 +18,12 @@ describe("UCSBOrganizationTable tests", () => {
   const queryClient = new QueryClient();
 
   const expectedHeaders = [
-    "id",
     "OrgCode",
     "OrgTranslationShort",
     "OrgTranslation",
     "Inactive",
   ];
   const expectedFields = [
-    "id",
     "orgCode",
     "orgTranslationShort",
     "orgTranslation",
@@ -90,9 +88,6 @@ describe("UCSBOrganizationTable tests", () => {
       expect(header).toBeInTheDocument();
     });
 
-    expect(screen.getByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent(
-      "1",
-    );
     expect(
       screen.getByTestId(`${testId}-cell-row-0-col-orgCode`),
     ).toHaveTextContent("SKY");
@@ -100,9 +95,6 @@ describe("UCSBOrganizationTable tests", () => {
       screen.getByTestId(`${testId}-cell-row-0-col-inactive`),
     ).toHaveTextContent("true");
 
-    expect(screen.getByTestId(`${testId}-cell-row-1-col-id`)).toHaveTextContent(
-      "2",
-    );
     expect(
       screen.getByTestId(`${testId}-cell-row-1-col-orgCode`),
     ).toHaveTextContent("OSLI");
@@ -150,16 +142,10 @@ describe("UCSBOrganizationTable tests", () => {
       expect(header).toBeInTheDocument();
     });
 
-    expect(screen.getByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent(
-      "1",
-    );
     expect(
       screen.getByTestId(`${testId}-cell-row-0-col-orgCode`),
     ).toHaveTextContent("SKY");
 
-    expect(screen.getByTestId(`${testId}-cell-row-1-col-id`)).toHaveTextContent(
-      "2",
-    );
     expect(
       screen.getByTestId(`${testId}-cell-row-1-col-orgCode`),
     ).toHaveTextContent("OSLI");
@@ -186,9 +172,6 @@ describe("UCSBOrganizationTable tests", () => {
 
     // assert - check that the expected content is rendered
     expect(
-      await screen.findByTestId(`${testId}-cell-row-0-col-id`),
-    ).toHaveTextContent("1");
-    expect(
       screen.getByTestId(`${testId}-cell-row-0-col-orgCode`),
     ).toHaveTextContent("SKY");
 
@@ -202,7 +185,9 @@ describe("UCSBOrganizationTable tests", () => {
 
     // assert - check that the navigate function was called with the expected path
     await waitFor(() =>
-      expect(mockedNavigate).toHaveBeenCalledWith("/ucsborganizations/edit/1"),
+      expect(mockedNavigate).toHaveBeenCalledWith(
+        "/ucsborganizations/edit/SKY",
+      ),
     );
   });
 
@@ -228,9 +213,7 @@ describe("UCSBOrganizationTable tests", () => {
     );
 
     // assert - check that the expected content is rendered
-    expect(
-      await screen.findByTestId(`${testId}-cell-row-0-col-id`),
-    ).toHaveTextContent("1");
+
     expect(
       screen.getByTestId(`${testId}-cell-row-0-col-orgCode`),
     ).toHaveTextContent("SKY");
@@ -246,6 +229,6 @@ describe("UCSBOrganizationTable tests", () => {
     // assert - check that the delete endpoint was called
 
     await waitFor(() => expect(axiosMock.history.delete.length).toBe(1));
-    expect(axiosMock.history.delete[0].params).toEqual({ id: 1 });
+    expect(axiosMock.history.delete[0].params).toEqual({ orgCode: "SKY" });
   });
 });

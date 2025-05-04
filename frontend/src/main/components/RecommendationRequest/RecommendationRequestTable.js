@@ -5,15 +5,15 @@ import { useBackendMutation } from "main/utils/useBackend";
 import {
   cellToAxiosParamsDelete,
   onDeleteSuccess,
-} from "main/utils/articleUtils";
+} from "main/utils/recommendationRequestUtils";
 import { useNavigate } from "react-router-dom";
 import { hasRole } from "main/utils/currentUser";
 
-export default function ArticleTable({ articles, currentUser }) {
+export default function RecommendationRequestTable({ requests, currentUser }) {
   const navigate = useNavigate();
 
   const editCallback = (cell) => {
-    navigate(`/articles/edit/${cell.row.values.id}`);
+    navigate(`/recommendationrequests/edit/${cell.row.values.id}`);
   };
 
   // Stryker disable all : hard to test for query caching
@@ -21,7 +21,7 @@ export default function ArticleTable({ articles, currentUser }) {
   const deleteMutation = useBackendMutation(
     cellToAxiosParamsDelete,
     { onSuccess: onDeleteSuccess },
-    ["/api/articles/all"],
+    ["/api/recommendationrequests/all"],
   );
   // Stryker restore all
 
@@ -36,33 +36,55 @@ export default function ArticleTable({ articles, currentUser }) {
       accessor: "id", // accessor is the "key" in the data
     },
     {
-      Header: "Title",
-      accessor: "title",
+      Header: "RequesterEmail",
+      accessor: "requesterEmail",
     },
     {
-      Header: "Url",
-      accessor: "url",
+      Header: "ProfessorEmail",
+      accessor: "professorEmail",
     },
     {
       Header: "Explanation",
       accessor: "explanation",
     },
     {
-      Header: "Email",
-      accessor: "email",
+      Header: "DateRequested",
+      accessor: "dateRequested",
     },
     {
-      Header: "Date Added",
-      accessor: "dateAdded",
+      Header: "DateNeeded",
+      accessor: "dateNeeded",
+    },
+    {
+      Header: "Done",
+      accessor: "done",
     },
   ];
 
   if (hasRole(currentUser, "ROLE_ADMIN")) {
-    columns.push(ButtonColumn("Edit", "primary", editCallback, "ArticleTable"));
     columns.push(
-      ButtonColumn("Delete", "danger", deleteCallback, "ArticleTable"),
+      ButtonColumn(
+        "Edit",
+        "primary",
+        editCallback,
+        "RecommendationRequestTable",
+      ),
+    );
+    columns.push(
+      ButtonColumn(
+        "Delete",
+        "danger",
+        deleteCallback,
+        "RecommendationRequestTable",
+      ),
     );
   }
 
-  return <OurTable data={articles} columns={columns} testid={"ArticleTable"} />;
+  return (
+    <OurTable
+      data={requests}
+      columns={columns}
+      testid={"RecommendationRequestTable"}
+    />
+  );
 }
