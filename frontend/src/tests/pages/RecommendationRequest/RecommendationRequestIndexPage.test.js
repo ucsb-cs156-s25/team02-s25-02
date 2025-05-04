@@ -117,6 +117,7 @@ describe("RecommendationRequestIndexPage tests", () => {
     const restoreConsole = mockConsole();
 
     // act
+
     render(
       <QueryClientProvider client={queryClient}>
         <MemoryRouter>
