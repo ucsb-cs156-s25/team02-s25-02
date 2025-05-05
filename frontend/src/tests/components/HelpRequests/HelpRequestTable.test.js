@@ -98,8 +98,6 @@ describe("HelpRequestTable tests", () => {
       screen.getByTestId(`${testId}-cell-row-0-col-requesterEmail`),
     ).toHaveTextContent("ayalawang@ucsb.edu");
 
-
-
     expect(screen.getByTestId(`${testId}-cell-row-1-col-id`)).toHaveTextContent(
       "2",
     );
@@ -107,8 +105,9 @@ describe("HelpRequestTable tests", () => {
       screen.getByTestId(`${testId}-cell-row-1-col-explanation`),
     ).toHaveTextContent("need help on branching");
 
-    expect(screen.getByTestId(`${testId}-cell-row-0-col-teamId`)).toHaveTextContent("02");
-
+    expect(
+      screen.getByTestId(`${testId}-cell-row-0-col-teamId`),
+    ).toHaveTextContent("02");
 
     const editButton = screen.getByTestId(
       `${testId}-cell-row-0-col-Edit-button`,
@@ -168,79 +167,78 @@ describe("HelpRequestTable tests", () => {
     expect(screen.queryByText("Edit")).not.toBeInTheDocument();
   });
 
-    test("Edit button navigates to the edit page", async () => {
-      // arrange
-      const currentUser = currentUserFixtures.adminUser;
+  test("Edit button navigates to the edit page", async () => {
+    // arrange
+    const currentUser = currentUserFixtures.adminUser;
 
-      // act - render the component
-      render(
-        <QueryClientProvider client={queryClient}>
-          <MemoryRouter>
-            <HelpRequestTable
-              helpRequests={helpRequestFixtures.threehelpRequests}
-              currentUser={currentUser}
-            />
-          </MemoryRouter>
-        </QueryClientProvider>,
-      );
+    // act - render the component
+    render(
+      <QueryClientProvider client={queryClient}>
+        <MemoryRouter>
+          <HelpRequestTable
+            helpRequests={helpRequestFixtures.threehelpRequests}
+            currentUser={currentUser}
+          />
+        </MemoryRouter>
+      </QueryClientProvider>,
+    );
 
-      // assert - check that the expected content is rendered
-      expect(
-        await screen.findByTestId(`${testId}-cell-row-0-col-id`),
-      ).toHaveTextContent("1");
-      
+    // assert - check that the expected content is rendered
+    expect(
+      await screen.findByTestId(`${testId}-cell-row-0-col-id`),
+    ).toHaveTextContent("1");
 
-      const editButton = screen.getByTestId(
-        `${testId}-cell-row-0-col-Edit-button`,
-      );
-      expect(editButton).toBeInTheDocument();
+    const editButton = screen.getByTestId(
+      `${testId}-cell-row-0-col-Edit-button`,
+    );
+    expect(editButton).toBeInTheDocument();
 
-      // act - click the edit button
-      fireEvent.click(editButton);
+    // act - click the edit button
+    fireEvent.click(editButton);
 
-      // assert - check that the navigate function was called with the expected path
-      await waitFor(() =>
-        expect(mockedNavigate).toHaveBeenCalledWith("/helpRequests/edit/1"),
-      );
-    });
+    // assert - check that the navigate function was called with the expected path
+    await waitFor(() =>
+      expect(mockedNavigate).toHaveBeenCalledWith("/helpRequests/edit/1"),
+    );
+  });
 
-    test("Delete button calls delete callback", async () => {
-      // arrange
-      const currentUser = currentUserFixtures.adminUser;
+  test("Delete button calls delete callback", async () => {
+    // arrange
+    const currentUser = currentUserFixtures.adminUser;
 
-      const axiosMock = new AxiosMockAdapter(axios);
-      axiosMock
-        .onDelete("/api/helpRequests")
-        .reply(200, { message: "Help Request deleted" });
+    const axiosMock = new AxiosMockAdapter(axios);
+    axiosMock
+      .onDelete("/api/helpRequests")
+      .reply(200, { message: "Help Request deleted" });
 
-      // act - render the component
-      render(
-        <QueryClientProvider client={queryClient}>
-          <MemoryRouter>
-            <HelpRequestTable
-              helpRequests={helpRequestFixtures.threehelpRequests}
-              currentUser={currentUser}
-            />
-          </MemoryRouter>
-        </QueryClientProvider>,
-      );
+    // act - render the component
+    render(
+      <QueryClientProvider client={queryClient}>
+        <MemoryRouter>
+          <HelpRequestTable
+            helpRequests={helpRequestFixtures.threehelpRequests}
+            currentUser={currentUser}
+          />
+        </MemoryRouter>
+      </QueryClientProvider>,
+    );
 
-      // assert - check that the expected content is rendered
-      expect(
-        await screen.findByTestId(`${testId}-cell-row-0-col-id`),
-      ).toHaveTextContent("1");
-     
-      const deleteButton = screen.getByTestId(
-        `${testId}-cell-row-0-col-Delete-button`,
-      );
-      expect(deleteButton).toBeInTheDocument();
+    // assert - check that the expected content is rendered
+    expect(
+      await screen.findByTestId(`${testId}-cell-row-0-col-id`),
+    ).toHaveTextContent("1");
 
-      // act - click the delete button
-      fireEvent.click(deleteButton);
+    const deleteButton = screen.getByTestId(
+      `${testId}-cell-row-0-col-Delete-button`,
+    );
+    expect(deleteButton).toBeInTheDocument();
 
-      // assert - check that the delete endpoint was called
+    // act - click the delete button
+    fireEvent.click(deleteButton);
 
-      await waitFor(() => expect(axiosMock.history.delete.length).toBe(1));
-      expect(axiosMock.history.delete[0].params).toEqual({ id: 1 });
-    });
+    // assert - check that the delete endpoint was called
+
+    await waitFor(() => expect(axiosMock.history.delete.length).toBe(1));
+    expect(axiosMock.history.delete[0].params).toEqual({ id: 1 });
+  });
 });
