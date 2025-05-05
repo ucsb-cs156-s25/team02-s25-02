@@ -19,7 +19,7 @@ function HelpRequestForm({
 
   const testIdPrefix = "HelpRequestForm";
 
-    // For explanation, see: https://stackoverflow.com/questions/3143070/javascript-regex-iso-datetime
+  // For explanation, see: https://stackoverflow.com/questions/3143070/javascript-regex-iso-datetime
   // Note that even this complex regex may still need some tweaks
 
   // Stryker disable Regex
@@ -51,7 +51,7 @@ function HelpRequestForm({
           type="text"
           isInvalid={Boolean(errors.requesterEmail)}
           {...register("requesterEmail", {
-            required: "Requester Email is required.",
+            required: "Requester Email is required",
             maxLength: {
               value: 255,
               message: "Max length 255 characters",
@@ -71,7 +71,7 @@ function HelpRequestForm({
           type="text"
           isInvalid={Boolean(errors.description)}
           {...register("teamId", {
-            required: "teamId is required.",
+            required: "teamId is required",
           })}
         />
         <Form.Control.Feedback type="invalid">
@@ -89,7 +89,7 @@ function HelpRequestForm({
           type="text"
           isInvalid={Boolean(errors.description)}
           {...register("tableOrBreakoutRoom", {
-            required: "Table or Breakout Room is required.",
+            required: "Table or Breakout Room is required",
           })}
         />
         <Form.Control.Feedback type="invalid">
@@ -110,14 +110,12 @@ function HelpRequestForm({
           })}
         />
         <Form.Control.Feedback type="invalid">
-          {errors.requestTime && "Request time is required. "}
+          {errors.requestTime && "Request time is required"}
         </Form.Control.Feedback>
       </Form.Group>
 
       <Form.Group className="mb-3">
-        <Form.Label htmlFor="explanation">
-          Explanation
-        </Form.Label>
+        <Form.Label htmlFor="explanation">Explanation</Form.Label>
         <Form.Control
           data-testid={testIdPrefix + "-explanation"}
           id="explanation"
@@ -132,26 +130,21 @@ function HelpRequestForm({
         </Form.Control.Feedback>
       </Form.Group>
 
-
-
       <Form.Group className="mb-3">
-        <Form.Label htmlFor="solved">
-          Solved
-        </Form.Label>
+        <Form.Label htmlFor="solved">Solved</Form.Label>
         <Form.Control
           data-testid={testIdPrefix + "-solved"}
           id="solved"
           type="bool"
           isInvalid={Boolean(errors.description)}
           {...register("solved", {
-            required: "Solved status is required.",
+            required: "Solved status is required",
           })}
         />
         <Form.Control.Feedback type="invalid">
           {errors.solved?.message}
         </Form.Control.Feedback>
       </Form.Group>
-
 
       <Button type="submit" data-testid={testIdPrefix + "-submit"}>
         {buttonLabel}
