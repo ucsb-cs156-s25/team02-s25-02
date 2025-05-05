@@ -42,12 +42,12 @@ describe("HelpRequestForm tests", () => {
       expect(header).toBeInTheDocument();
     });
 
-
-
     // ✅ Add assertions for all data-testid values
     expect(screen.getByTestId(`${testId}-requesterEmail`)).toBeInTheDocument();
     expect(screen.getByTestId(`${testId}-teamId`)).toBeInTheDocument();
-    expect(screen.getByTestId(`${testId}-tableOrBreakoutRoom`)).toBeInTheDocument();
+    expect(
+      screen.getByTestId(`${testId}-tableOrBreakoutRoom`),
+    ).toBeInTheDocument();
     expect(screen.getByTestId(`${testId}-requestTime`)).toBeInTheDocument();
     expect(screen.getByTestId(`${testId}-explanation`)).toBeInTheDocument();
     expect(screen.getByTestId(`${testId}-solved`)).toBeInTheDocument();
@@ -107,7 +107,9 @@ describe("HelpRequestForm tests", () => {
 
     await screen.findByText(/Requester Email is required/);
     expect(screen.getByText(/teamId is required/)).toBeInTheDocument();
-    expect(screen.getByText(/Table or Breakout Room is required/)).toBeInTheDocument();
+    expect(
+      screen.getByText(/Table or Breakout Room is required/),
+    ).toBeInTheDocument();
     expect(screen.getByText(/Request time is required/)).toBeInTheDocument();
     expect(screen.getByText(/Explanation is required/)).toBeInTheDocument();
     expect(screen.getByText(/Solved status is required/)).toBeInTheDocument();
