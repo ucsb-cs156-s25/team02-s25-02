@@ -22,7 +22,7 @@ export default function MenuItemReviewEditPage({ storybook = false }) {
       params: {
         id,
       },
-    },
+    }
   );
 
   const objectToAxiosPutParams = (menuitemreview) => ({
@@ -42,7 +42,13 @@ export default function MenuItemReviewEditPage({ storybook = false }) {
 
   const onSuccess = (menuitemreview) => {
     toast(
-      `MenuItem Review Updated - id: ${menuitemreview.id} itemId: ${menuitemreview.itemId} reviewerEmail: ${menuitemreview.reviewerEmail} stars: ${menuitemreview.stars} dateReviewed: ${menuitemreview.dateReviewed} comments: ${menuitemreview.comments}`,
+      `MenuItem Review Updated: 
+      id: ${menuitemreview.id}
+      itemId: ${menuitemreview.itemId}
+      reviewerEmail: ${menuitemreview.reviewerEmail}
+      stars: ${menuitemreview.stars}
+      dateReviewed: ${menuitemreview.dateReviewed}
+      comments: ${menuitemreview.comments}`
     );
   };
 
@@ -50,7 +56,7 @@ export default function MenuItemReviewEditPage({ storybook = false }) {
     objectToAxiosPutParams,
     { onSuccess },
     // Stryker disable next-line all : hard to set up test for caching
-    [`/api/menuitemreview?id=${id}`],
+    [`/api/menuitemreview?id=${id}`]
   );
 
   const { isSuccess } = mutation;

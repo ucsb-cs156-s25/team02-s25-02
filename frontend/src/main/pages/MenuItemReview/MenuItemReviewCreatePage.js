@@ -19,7 +19,13 @@ export default function MenuItemReviewCreatePage({ storybook = false }) {
 
   const onSuccess = (menuitemreview) => {
     toast(
-      `New menu item review Created - id: ${menuitemreview.id} itemId: ${menuitemreview.itemId} reviewerEmail: ${menuitemreview.reviewerEmail} stars: ${menuitemreview.stars} dateReviewed: ${menuitemreview.dateReviewed} comments: ${menuitemreview.comments}`,
+      `MenuItem Review Updated: 
+      id: ${menuitemreview.id}
+      itemId: ${menuitemreview.itemId}
+      reviewerEmail: ${menuitemreview.reviewerEmail}
+      stars: ${menuitemreview.stars}
+      dateReviewed: ${menuitemreview.dateReviewed}
+      comments: ${menuitemreview.comments}`
     );
   };
 
@@ -27,7 +33,7 @@ export default function MenuItemReviewCreatePage({ storybook = false }) {
     objectToAxiosParams,
     { onSuccess },
     // Stryker disable next-line all : hard to set up test for caching
-    ["/api/menuitemreview/all"], // mutation makes this key stale so that pages relying on it reload
+    ["/api/menuitemreview/all"] // mutation makes this key stale so that pages relying on it reload
   );
 
   const { isSuccess } = mutation;
