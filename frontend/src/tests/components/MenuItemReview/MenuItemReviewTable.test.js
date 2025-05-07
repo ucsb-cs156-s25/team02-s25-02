@@ -23,7 +23,7 @@ describe("MenuItemReviewTable tests", () => {
         <MemoryRouter>
           <MenuItemReviewTable reviews={[]} currentUser={currentUser} />
         </MemoryRouter>
-      </QueryClientProvider>,
+      </QueryClientProvider>
     );
   });
 
@@ -35,7 +35,7 @@ describe("MenuItemReviewTable tests", () => {
         <MemoryRouter>
           <MenuItemReviewTable reviews={[]} currentUser={currentUser} />
         </MemoryRouter>
-      </QueryClientProvider>,
+      </QueryClientProvider>
     );
   });
 
@@ -47,7 +47,7 @@ describe("MenuItemReviewTable tests", () => {
         <MemoryRouter>
           <MenuItemReviewTable reviews={[]} currentUser={currentUser} />
         </MemoryRouter>
-      </QueryClientProvider>,
+      </QueryClientProvider>
     );
   });
 
@@ -60,7 +60,7 @@ describe("MenuItemReviewTable tests", () => {
         <MemoryRouter>
           <MenuItemReviewTable reviews={reviews} currentUser={currentUser} />
         </MemoryRouter>
-      </QueryClientProvider>,
+      </QueryClientProvider>
     );
 
     const expectedHeaders = [
@@ -80,22 +80,22 @@ describe("MenuItemReviewTable tests", () => {
 
     // Check first review data using specific test IDs for cells
     expect(
-      screen.getByTestId("MenuItemReviewTable-cell-row-0-col-id"),
+      screen.getByTestId("MenuItemReviewTable-cell-row-0-col-id")
     ).toHaveTextContent("1");
     expect(
-      screen.getByTestId("MenuItemReviewTable-cell-row-0-col-itemId"),
+      screen.getByTestId("MenuItemReviewTable-cell-row-0-col-itemId")
     ).toHaveTextContent("1"); // Check itemId specifically
     expect(
-      screen.getByTestId("MenuItemReviewTable-cell-row-0-col-reviewerEmail"),
+      screen.getByTestId("MenuItemReviewTable-cell-row-0-col-reviewerEmail")
     ).toHaveTextContent("shiyuanwang@ucsb.edu");
     expect(
-      screen.getByTestId("MenuItemReviewTable-cell-row-0-col-stars"),
+      screen.getByTestId("MenuItemReviewTable-cell-row-0-col-stars")
     ).toHaveTextContent("5");
     expect(
-      screen.getByTestId("MenuItemReviewTable-cell-row-0-col-dateReviewed"),
+      screen.getByTestId("MenuItemReviewTable-cell-row-0-col-dateReviewed")
     ).toHaveTextContent("2024-02-14T12:00:00");
     expect(
-      screen.getByTestId("MenuItemReviewTable-cell-row-0-col-comments"),
+      screen.getByTestId("MenuItemReviewTable-cell-row-0-col-comments")
     ).toHaveTextContent("Excellent item! Very tasty and well-prepared.");
   });
 
@@ -108,22 +108,22 @@ describe("MenuItemReviewTable tests", () => {
         <MemoryRouter>
           <MenuItemReviewTable reviews={reviews} currentUser={currentUser} />
         </MemoryRouter>
-      </QueryClientProvider>,
+      </QueryClientProvider>
     );
 
     await waitFor(() => {
       expect(
-        screen.getByTestId("MenuItemReviewTable-cell-row-0-col-Edit-button"),
+        screen.getByTestId("MenuItemReviewTable-cell-row-0-col-Edit-button")
       ).toBeInTheDocument();
     });
 
     const editButton = screen.getByTestId(
-      "MenuItemReviewTable-cell-row-0-col-Edit-button",
+      "MenuItemReviewTable-cell-row-0-col-Edit-button"
     );
     fireEvent.click(editButton);
 
     await waitFor(() =>
-      expect(mockedNavigate).toHaveBeenCalledWith("/menuitemreview/edit/1"),
+      expect(mockedNavigate).toHaveBeenCalledWith("/menuitemreview/edit/1")
     );
   });
 
@@ -136,17 +136,18 @@ describe("MenuItemReviewTable tests", () => {
         <MemoryRouter>
           <MenuItemReviewTable reviews={reviews} currentUser={currentUser} />
         </MemoryRouter>
-      </QueryClientProvider>,
+      </QueryClientProvider>
     );
 
     await waitFor(() => {
       expect(
-        screen.queryByTestId("MenuItemReviewTable-cell-row-0-col-Edit-button"),
+        screen.queryByTestId("MenuItemReviewTable-cell-row-0-col-Edit-button")
       ).not.toBeInTheDocument();
+    });
+
+    await waitFor(() => {
       expect(
-        screen.queryByTestId(
-          "MenuItemReviewTable-cell-row-0-col-Delete-button",
-        ),
+        screen.queryByTestId("MenuItemReviewTable-cell-row-0-col-Delete-button")
       ).not.toBeInTheDocument();
     });
   });
@@ -160,14 +161,14 @@ describe("MenuItemReviewTable tests", () => {
         <MemoryRouter>
           <MenuItemReviewTable reviews={reviews} currentUser={currentUser} />
         </MemoryRouter>
-      </QueryClientProvider>,
+      </QueryClientProvider>
     );
 
     const editButton = await screen.findByTestId(
-      "MenuItemReviewTable-cell-row-0-col-Edit-button",
+      "MenuItemReviewTable-cell-row-0-col-Edit-button"
     );
     const deleteButton = await screen.findByTestId(
-      "MenuItemReviewTable-cell-row-0-col-Delete-button",
+      "MenuItemReviewTable-cell-row-0-col-Delete-button"
     );
 
     // Bootstrap v5 uses btn-primary and btn-danger for variants

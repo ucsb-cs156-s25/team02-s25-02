@@ -15,7 +15,7 @@ describe("MenuItemReviewForm tests", () => {
     render(
       <Router>
         <MenuItemReviewForm />
-      </Router>,
+      </Router>
     );
     expect(await screen.findByText(/Item ID/)).toBeInTheDocument();
     expect(screen.getByText(/Reviewer Email/)).toBeInTheDocument();
@@ -28,7 +28,7 @@ describe("MenuItemReviewForm tests", () => {
     render(
       <Router>
         <MenuItemReviewForm />
-      </Router>,
+      </Router>
     );
     const cancelButton = screen.getByText(/Cancel/);
     fireEvent.click(cancelButton);
@@ -39,7 +39,7 @@ describe("MenuItemReviewForm tests", () => {
     render(
       <Router>
         <MenuItemReviewForm />
-      </Router>,
+      </Router>
     );
 
     const submitButton = screen.getByText(/Create/);
@@ -64,7 +64,7 @@ describe("MenuItemReviewForm tests", () => {
 
     await screen.findByText(/Item ID must be at least 1./);
     expect(
-      screen.getByText(/Invalid email address format./),
+      screen.getByText(/Invalid email address format./)
     ).toBeInTheDocument();
     expect(screen.getByText(/Stars must be at most 5./)).toBeInTheDocument();
   });
@@ -74,12 +74,12 @@ describe("MenuItemReviewForm tests", () => {
     render(
       <Router>
         <MenuItemReviewForm initialContents={initialContents} />
-      </Router>,
+      </Router>
     );
 
     expect(screen.getByTestId("MenuItemReviewForm-id")).toBeInTheDocument();
     expect(screen.getByTestId("MenuItemReviewForm-id")).toHaveValue(
-      initialContents.id.toString(),
+      initialContents.id.toString()
     );
     expect(screen.getByTestId("MenuItemReviewForm-id")).toBeDisabled();
   });
@@ -88,7 +88,7 @@ describe("MenuItemReviewForm tests", () => {
     render(
       <Router>
         <MenuItemReviewForm />
-      </Router>,
+      </Router>
     );
 
     const starsField = screen.getByLabelText(/Stars/);
@@ -99,8 +99,8 @@ describe("MenuItemReviewForm tests", () => {
     fireEvent.click(submitButton);
     await waitFor(() =>
       expect(
-        screen.queryByText(/Stars must be at most 5./),
-      ).not.toBeInTheDocument(),
+        screen.queryByText(/Stars must be at most 5./)
+      ).not.toBeInTheDocument()
     );
 
     // Test invalid input (below min)
@@ -123,7 +123,7 @@ describe("MenuItemReviewForm tests", () => {
     render(
       <Router>
         <MenuItemReviewForm />
-      </Router>,
+      </Router>
     );
 
     const reviewerEmailField = screen.getByLabelText(/Reviewer Email/);
@@ -136,8 +136,8 @@ describe("MenuItemReviewForm tests", () => {
     fireEvent.click(submitButton);
     await waitFor(() =>
       expect(
-        screen.queryByText(/Invalid email address format./),
-      ).not.toBeInTheDocument(),
+        screen.queryByText(/Invalid email address format./)
+      ).not.toBeInTheDocument()
     );
 
     // Test invalid email
@@ -152,7 +152,7 @@ describe("MenuItemReviewForm tests", () => {
     render(
       <Router>
         <MenuItemReviewForm />
-      </Router>,
+      </Router>
     );
 
     const dateReviewedField = screen.getByLabelText(/Date Reviewed/);
@@ -165,8 +165,8 @@ describe("MenuItemReviewForm tests", () => {
     fireEvent.click(submitButton);
     await waitFor(() =>
       expect(
-        screen.queryByText(/Invalid date\/time format./),
-      ).not.toBeInTheDocument(),
+        screen.queryByText(/Invalid date\/time format./)
+      ).not.toBeInTheDocument()
     );
 
     // Test invalid date
@@ -176,111 +176,93 @@ describe("MenuItemReviewForm tests", () => {
   });
 
   test("shows error for invalid email format", async () => {
-    const { getByTestId, getByText } = render(
-      <MenuItemReviewForm submitAction={jest.fn()} />,
-    );
+    render(<MenuItemReviewForm submitAction={jest.fn()} />);
 
-    const emailInput = getByTestId("MenuItemReviewForm-reviewerEmail");
-    const submitButton = getByTestId("MenuItemReviewForm-submit");
+    const emailInput = screen.getByTestId("MenuItemReviewForm-reviewerEmail");
+    const submitButton = screen.getByTestId("MenuItemReviewForm-submit");
 
     fireEvent.change(emailInput, { target: { value: "not-an-email" } });
     fireEvent.click(submitButton);
 
-    await waitFor(() =>
-      expect(getByText("Invalid email address format.")).toBeInTheDocument(),
-    );
+    await screen.findByText(/Invalid email address format./);
   });
 
   test("itemId input treats input as number due to valueAsNumber", async () => {
     const mockSubmit = jest.fn();
-    const { getByTestId } = render(
-      <MenuItemReviewForm submitAction={mockSubmit} />,
-    );
+    render(<MenuItemReviewForm submitAction={mockSubmit} />);
 
-    fireEvent.change(getByTestId("MenuItemReviewForm-itemId"), {
+    fireEvent.change(screen.getByTestId("MenuItemReviewForm-itemId"), {
       target: { value: "42" },
     });
-    fireEvent.change(getByTestId("MenuItemReviewForm-reviewerEmail"), {
+    fireEvent.change(screen.getByTestId("MenuItemReviewForm-reviewerEmail"), {
       target: { value: "test@example.com" },
     });
-    fireEvent.change(getByTestId("MenuItemReviewForm-stars"), {
+    fireEvent.change(screen.getByTestId("MenuItemReviewForm-stars"), {
       target: { value: "5" },
     });
-    fireEvent.change(getByTestId("MenuItemReviewForm-dateReviewed"), {
+    fireEvent.change(screen.getByTestId("MenuItemReviewForm-dateReviewed"), {
       target: { value: "2023-12-01T12:00" },
     });
-    fireEvent.change(getByTestId("MenuItemReviewForm-comments"), {
+    fireEvent.change(screen.getByTestId("MenuItemReviewForm-comments"), {
       target: { value: "Great!" },
     });
 
-    fireEvent.click(getByTestId("MenuItemReviewForm-submit"));
+    fireEvent.click(screen.getByTestId("MenuItemReviewForm-submit"));
 
     await waitFor(() =>
       expect(mockSubmit).toHaveBeenCalledWith(
         expect.objectContaining({
           itemId: 42, // number, not string
         }),
-        expect.anything(),
-      ),
+        expect.anything()
+      )
     );
   });
 
   test("shows error when stars input is not between 1 and 5", async () => {
-    const { getByTestId, getByText } = render(
-      <MenuItemReviewForm submitAction={jest.fn()} />,
-    );
+    render(<MenuItemReviewForm submitAction={jest.fn()} />);
 
-    fireEvent.change(getByTestId("MenuItemReviewForm-stars"), {
+    fireEvent.change(screen.getByTestId("MenuItemReviewForm-stars"), {
       target: { value: "6" },
     });
-    fireEvent.click(getByTestId("MenuItemReviewForm-submit"));
+    fireEvent.click(screen.getByTestId("MenuItemReviewForm-submit"));
 
-    await waitFor(() =>
-      expect(getByText("Stars must be at most 5.")).toBeInTheDocument(),
-    );
+    await screen.findByText(/Stars must be at most 5./);
   });
 
   test("shows error when non-numeric string entered into itemId", async () => {
-    const { getByTestId, getByText } = render(
-      <MenuItemReviewForm submitAction={jest.fn()} />,
-    );
+    render(<MenuItemReviewForm submitAction={jest.fn()} />);
 
-    fireEvent.change(getByTestId("MenuItemReviewForm-itemId"), {
+    fireEvent.change(screen.getByTestId("MenuItemReviewForm-itemId"), {
       target: { value: "abc" }, // not a number
     });
-    fireEvent.click(getByTestId("MenuItemReviewForm-submit"));
+    fireEvent.click(screen.getByTestId("MenuItemReviewForm-submit"));
 
-    await waitFor(() =>
-      expect(getByText("Item ID is required.")).toBeInTheDocument(),
-    );
+    await screen.findByText(/Item ID is required./);
   });
 
   test("shows error for email without @", async () => {
-    renderFormWithInvalidEmail("foobar.com");
+    await renderFormWithInvalidEmail("foobar.com");
   });
 
   test("shows error for email without domain", async () => {
-    renderFormWithInvalidEmail("foo@");
+    await renderFormWithInvalidEmail("foo@");
   });
 
   test("shows error for email with invalid chars", async () => {
-    renderFormWithInvalidEmail("foo@bar@baz");
+    await renderFormWithInvalidEmail("foo@bar@baz");
   });
 
   // Helper
-  function renderFormWithInvalidEmail(badEmail) {
-    const { getByTestId, getByText } = render(
-      <MenuItemReviewForm submitAction={jest.fn()} />,
-    );
+  async function renderFormWithInvalidEmail(badEmail) {
+    render(<MenuItemReviewForm submitAction={jest.fn()} />);
 
-    fireEvent.change(getByTestId("MenuItemReviewForm-reviewerEmail"), {
+    fireEvent.change(screen.getByTestId("MenuItemReviewForm-reviewerEmail"), {
       target: { value: badEmail },
     });
 
-    fireEvent.click(getByTestId("MenuItemReviewForm-submit"));
+    fireEvent.click(screen.getByTestId("MenuItemReviewForm-submit"));
 
-    waitFor(() => {
-      expect(getByText("Invalid email address format.")).toBeInTheDocument();
-    });
+    await screen.findByText(/Invalid email address format./);
   }
 });
