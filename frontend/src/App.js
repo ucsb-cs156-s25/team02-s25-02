@@ -161,8 +161,7 @@ function App() {
           </>
         )}
 
-
-        {/* Menu Item Reviews */} 
+        {/* Menu Item Reviews */}
         {hasRole(currentUser, "ROLE_USER") && (
           <>
             <Route
@@ -171,7 +170,7 @@ function App() {
               element={<MenuItemReviewIndexPage />}
             />
           </>
-        )} 
+        )}
         {hasRole(currentUser, "ROLE_ADMIN") && (
           <>
             <Route
