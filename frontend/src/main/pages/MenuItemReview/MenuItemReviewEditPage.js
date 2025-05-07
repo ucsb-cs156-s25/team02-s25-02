@@ -14,7 +14,7 @@ export default function MenuItemReviewEditPage({ storybook = false }) {
     _status,
   } = useBackend(
     // Stryker disable next-line all : don't test internal caching of React Query
-    [`/api/menuitemreviews?id=${id}`],
+    [`/api/menuitemreview?id=${id}`],
     {
       // Stryker disable next-line all : GET is the default, so mutating this to "" doesn't introduce a bug
       method: "GET",
@@ -22,7 +22,7 @@ export default function MenuItemReviewEditPage({ storybook = false }) {
       params: {
         id,
       },
-    }
+    },
   );
 
   const objectToAxiosPutParams = (menuitemreview) => ({
@@ -48,7 +48,7 @@ export default function MenuItemReviewEditPage({ storybook = false }) {
       reviewerEmail: ${menuitemreview.reviewerEmail}
       stars: ${menuitemreview.stars}
       dateReviewed: ${menuitemreview.dateReviewed}
-      comments: ${menuitemreview.comments}`
+      comments: ${menuitemreview.comments}`,
     );
   };
 
@@ -56,7 +56,7 @@ export default function MenuItemReviewEditPage({ storybook = false }) {
     objectToAxiosPutParams,
     { onSuccess },
     // Stryker disable next-line all : hard to set up test for caching
-    [`/api/menuitemreview?id=${id}`]
+    [`/api/menuitemreview?id=${id}`],
   );
 
   const { isSuccess } = mutation;
@@ -72,7 +72,7 @@ export default function MenuItemReviewEditPage({ storybook = false }) {
   return (
     <BasicLayout>
       <div className="pt-2">
-        <h1>Edit Restaurant</h1>
+        <h1>Edit Menu Item Review</h1>
         {menuitemreview && (
           <MenuItemReviewForm
             submitAction={onSubmit}

@@ -2,6 +2,12 @@ import {
   cellToAxiosParamsDelete,
   onDeleteSuccess,
 } from "main/utils/menuItemReviewUtils";
+import { toast } from "react-toastify";
+
+// Mock the toast function
+jest.mock("react-toastify", () => ({
+  toast: jest.fn(),
+}));
 
 describe("menuItemReviewUtils", () => {
   describe("cellToAxiosParamsDelete", () => {
@@ -27,10 +33,15 @@ describe("menuItemReviewUtils", () => {
   });
 
   describe("onDeleteSuccess", () => {
-    test("should return the response", () => {
-      const response = { message: "Success" };
-      const result = onDeleteSuccess(response);
-      expect(result).toEqual(response);
+    beforeEach(() => {
+      toast.mockClear();
+    });
+
+    // just general testing
+    test("should call toast with the message", () => {
+      const message = "Menu item review with id 1 was deleted";
+      onDeleteSuccess(message);
+      expect(toast).toHaveBeenCalledWith(message);
     });
   });
 });
