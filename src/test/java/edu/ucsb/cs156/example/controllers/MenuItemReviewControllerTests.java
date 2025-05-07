@@ -9,6 +9,7 @@ import edu.ucsb.cs156.example.repositories.MenuItemReviewRepository;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Map;
+import java.time.LocalDateTime;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -81,10 +82,12 @@ public class MenuItemReviewControllerTests extends ControllerTestCase {
         @Test
         public void test_that_logged_in_user_can_get_by_id_when_the_id_exists() throws Exception {
                 // arrange
+                LocalDateTime testDate = LocalDateTime.parse("2024-03-15T12:00:00");
                 MenuItemReview review = MenuItemReview.builder()
                                 .itemId(1L)
                                 .reviewerEmail("student@ucsb.edu")
                                 .stars(4)
+                                .dateReviewed(testDate)
                                 .comments("Great food!")
                                 .build();
 
@@ -122,10 +125,14 @@ public class MenuItemReviewControllerTests extends ControllerTestCase {
         @Test
         public void logged_in_user_can_get_all_reviews() throws Exception {
                 // arrange
+                LocalDateTime testDate1 = LocalDateTime.parse("2024-03-15T12:00:00");
+                LocalDateTime testDate2 = LocalDateTime.parse("2024-03-16T13:00:00");
+                
                 MenuItemReview review1 = MenuItemReview.builder()
                                 .itemId(1L)
                                 .reviewerEmail("student1@ucsb.edu")
                                 .stars(4)
+                                .dateReviewed(testDate1)
                                 .comments("Great food!")
                                 .build();
 
@@ -133,6 +140,7 @@ public class MenuItemReviewControllerTests extends ControllerTestCase {
                                 .itemId(2L)
                                 .reviewerEmail("student2@ucsb.edu")
                                 .stars(5)
+                                .dateReviewed(testDate2)
                                 .comments("Excellent!")
                                 .build();
 
@@ -156,10 +164,12 @@ public class MenuItemReviewControllerTests extends ControllerTestCase {
         @Test
         public void an_admin_user_can_post_a_new_review() throws Exception {
                 // arrange
+                LocalDateTime testDate = LocalDateTime.parse("2024-03-15T12:00:00");
                 MenuItemReview review = MenuItemReview.builder()
                                 .itemId(1L)
                                 .reviewerEmail("student@ucsb.edu")
                                 .stars(4)
+                                .dateReviewed(testDate)
                                 .comments("Great food!")
                                 .build();
 
@@ -167,7 +177,7 @@ public class MenuItemReviewControllerTests extends ControllerTestCase {
 
                 // act
                 MvcResult response = mockMvc.perform(
-                                post("/api/menuitemreview/post?itemId=1&reviewerEmail=student@ucsb.edu&stars=4&comments=Great food!")
+                                post("/api/menuitemreview/post?itemId=1&reviewerEmail=student@ucsb.edu&stars=4&dateReviewed=2024-03-15T12:00:00&comments=Great food!")
                                                 .with(csrf()))
                                 .andExpect(status().isOk()).andReturn();
 
@@ -182,10 +192,12 @@ public class MenuItemReviewControllerTests extends ControllerTestCase {
         @Test
         public void admin_can_delete_a_review() throws Exception {
                 // arrange
+                LocalDateTime testDate = LocalDateTime.parse("2024-03-15T12:00:00");
                 MenuItemReview review = MenuItemReview.builder()
                                 .itemId(1L)
                                 .reviewerEmail("student@ucsb.edu")
                                 .stars(4)
+                                .dateReviewed(testDate)
                                 .comments("Great food!")
                                 .build();
 
@@ -226,10 +238,14 @@ public class MenuItemReviewControllerTests extends ControllerTestCase {
         @Test
         public void admin_can_edit_an_existing_review() throws Exception {
                 // arrange
+                LocalDateTime testDateOrig = LocalDateTime.parse("2024-03-15T12:00:00");
+                LocalDateTime testDateEdited = LocalDateTime.parse("2024-03-16T13:00:00");
+                
                 MenuItemReview reviewOrig = MenuItemReview.builder()
                                 .itemId(1L)
                                 .reviewerEmail("student@ucsb.edu")
                                 .stars(4)
+                                .dateReviewed(testDateOrig)
                                 .comments("Great food!")
                                 .build();
 
@@ -237,6 +253,7 @@ public class MenuItemReviewControllerTests extends ControllerTestCase {
                                 .itemId(2L)
                                 .reviewerEmail("newstudent@ucsb.edu")
                                 .stars(5)
+                                .dateReviewed(testDateEdited)
                                 .comments("Excellent food!")
                                 .build();
 
@@ -263,16 +280,19 @@ public class MenuItemReviewControllerTests extends ControllerTestCase {
                 MenuItemReview responseReview = mapper.readValue(responseString, MenuItemReview.class);
                 assertEquals(reviewEdited.getItemId(), responseReview.getItemId());
                 assertEquals(reviewEdited.getReviewerEmail(), responseReview.getReviewerEmail());
+                assertEquals(reviewEdited.getDateReviewed(), responseReview.getDateReviewed());
         }
 
         @WithMockUser(roles = { "ADMIN", "USER" })
         @Test
         public void admin_cannot_edit_review_that_does_not_exist() throws Exception {
                 // arrange
+                LocalDateTime testDate = LocalDateTime.parse("2024-03-15T12:00:00");
                 MenuItemReview reviewEdited = MenuItemReview.builder()
                                 .itemId(1L)
                                 .reviewerEmail("student@ucsb.edu")
                                 .stars(5)
+                                .dateReviewed(testDate)
                                 .comments("Excellent food!")
                                 .build();
 
