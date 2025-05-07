@@ -1,4 +1,4 @@
-const UCSBOrganizationFixtures = {
+const ucsbOrganizationsFixtures = {
   oneUCSBOrganization: [
     {
       orgCode: "ZPY",
@@ -13,7 +13,7 @@ const UCSBOrganizationFixtures = {
       orgCode: "SKY",
       orgTranslationShort: "SKYDIVING CLUB",
       orgTranslation: "SKYDIVING CLUB AT UCSB",
-      inactive: false,
+      inactive: true,
     },
 
     {
@@ -32,4 +32,4 @@ const UCSBOrganizationFixtures = {
   ],
 };
 
-export { UCSBOrganizationFixtures };
+export { ucsbOrganizationsFixtures };
