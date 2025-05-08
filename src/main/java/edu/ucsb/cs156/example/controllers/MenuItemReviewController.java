@@ -11,6 +11,8 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.format.annotation.DateTimeFormat;
+import java.time.LocalDateTime;
 
 /**
  * This is a REST controller for MenuItemReview
@@ -60,6 +62,7 @@ public class MenuItemReviewController extends ApiController {
      * @param itemId        the id of the menu item being reviewed
      * @param reviewerEmail the email of the reviewer
      * @param stars         the star rating (1-5)
+     * @param dateReviewed  the date the review was made
      * @param comments      the review comments
      * @return the saved review
      */
@@ -70,14 +73,16 @@ public class MenuItemReviewController extends ApiController {
             @Parameter(name = "itemId") @RequestParam Long itemId,
             @Parameter(name = "reviewerEmail") @RequestParam String reviewerEmail,
             @Parameter(name = "stars") @RequestParam int stars,
+            @Parameter(name = "dateReviewed", description = "date (in iso format, e.g. YYYY-mm-ddTHH:MM:SS; see https://en.wikipedia.org/wiki/ISO_8601)") @RequestParam("dateReviewed") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dateReviewed,
             @Parameter(name = "comments") @RequestParam String comments) {
 
-        log.info("itemId={}, reviewerEmail={}, stars={}, comments={}", itemId, reviewerEmail, stars, comments);
+        log.info("itemId={}, reviewerEmail={}, stars={}, dateReviewed={}, comments={}", itemId, reviewerEmail, stars, dateReviewed, comments);
 
         MenuItemReview review = MenuItemReview.builder()
                 .itemId(itemId)
                 .reviewerEmail(reviewerEmail)
                 .stars(stars)
+                .dateReviewed(dateReviewed)
                 .comments(comments)
                 .build();
 
@@ -104,6 +109,7 @@ public class MenuItemReviewController extends ApiController {
         review.setItemId(incoming.getItemId());
         review.setReviewerEmail(incoming.getReviewerEmail());
         review.setStars(incoming.getStars());
+        review.setDateReviewed(incoming.getDateReviewed());
         review.setComments(incoming.getComments());
 
         menuItemReviewRepository.save(review);
