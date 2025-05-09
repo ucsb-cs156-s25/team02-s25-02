@@ -11,16 +11,16 @@ export default function HelpRequestCreatePage({ storybook = false }) {
     params: {
       requesterEmail: helprequest.requesterEmail,
       teamId: helprequest.teamId,
-      tableOrBreakoutRoom: helprequest.tableOrBreakoutRoom, 
+      tableOrBreakoutRoom: helprequest.tableOrBreakoutRoom,
       requestTime: helprequest.requestTime,
       explanation: helprequest.explanation,
-      solved: helprequest.solved
+      solved: helprequest.solved,
     },
   });
 
   const onSuccess = (helprequest) => {
     toast(
-      `New Help Request Created - id: ${helprequest.id} name: ${helprequest.name}`,
+      `New Help Request Created - id: ${helprequest.id} requesterEmail: ${helprequest.requesterEmail}`,
     );
   };
 
