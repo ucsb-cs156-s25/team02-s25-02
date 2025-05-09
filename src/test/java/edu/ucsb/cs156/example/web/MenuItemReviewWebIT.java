@@ -28,8 +28,8 @@ public class MenuItemReviewWebIT extends WebTestCase {
         page.getByTestId("MenuItemReviewForm-itemId").fill("1");
         page.getByTestId("MenuItemReviewForm-reviewerEmail").fill("test@test.com");
         page.getByTestId("MenuItemReviewForm-stars").fill("5");
-        page.getByTestId("MenuItemReviewForm-dateReviewed").fill("2025-05-09T23:30:00");
-        page.getByTestId("MenuItemReviewForm-review").fill("This is a test review");
+        page.getByTestId("MenuItemReviewForm-dateReviewed").fill("2021-01-01T12:00");
+        page.getByTestId("MenuItemReviewForm-comments").fill("This is a test review");
         page.getByTestId("MenuItemReviewForm-submit").click();
 
         assertThat(page.getByTestId("MenuItemReviewTable-cell-row-0-col-reviewerEmail"))
@@ -37,10 +37,13 @@ public class MenuItemReviewWebIT extends WebTestCase {
 
         page.getByTestId("MenuItemReviewTable-cell-row-0-col-Edit-button").click();
         assertThat(page.getByText("Edit Menu Item Review")).isVisible();
-        page.getByTestId("MenuItemReviewForm-review").fill("This is a test review");
+        page.getByTestId("MenuItemReviewForm-reviewerEmail").fill("test2@test.com");
+        page.getByTestId("MenuItemReviewForm-stars").fill("4");
+        page.getByTestId("MenuItemReviewForm-dateReviewed").fill("2021-01-01T12:00");
+        page.getByTestId("MenuItemReviewForm-comments").fill("This is a test review 2");
         page.getByTestId("MenuItemReviewForm-submit").click();
 
-        assertThat(page.getByTestId("MenuItemReviewTable-cell-row-0-col-review")).hasText("This is a test review");
+        assertThat(page.getByTestId("MenuItemReviewTable-cell-row-0-col-comments")).hasText("This is a test review 2");
 
         page.getByTestId("MenuItemReviewTable-cell-row-0-col-Delete-button").click();
 
